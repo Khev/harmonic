@@ -4,12 +4,18 @@ import minigrid
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
+import logging
+
 from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.callbacks import BaseCallback
 from multiprocessing import Pool
 
+
 from utils.utils_custom_policies import HarmonicPolicy
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s", datefmt="%H:%M:%S")
+
 
 # --- Custom Observation Wrapper ---
 class CustomFlattenObservation(gym.ObservationWrapper):
@@ -81,14 +87,13 @@ def evaluate_on_test(model, num_episodes=10):
     return successes / num_episodes
 
 # --- Custom Callback for Periodic Evaluation ---
-# --- Custom Callback for Periodic Evaluation ---
 class PeriodicEvaluationCallback(BaseCallback):
     """
     A callback that evaluates the current model every log_interval timesteps
     and logs train/test success rates. Implements early stopping.
     """
     def __init__(self, log_interval, num_train_episodes=10, num_test_episodes=10, 
-                 early_stopping=True, patience=5, verbose=1):
+                 early_stopping=False, patience=5, verbose=1):
         super().__init__(verbose)
         self.log_interval = log_interval
         self.num_train_episodes = num_train_episodes
@@ -111,11 +116,9 @@ class PeriodicEvaluationCallback(BaseCallback):
             self.train_success.append(train_acc)
             self.test_success.append(test_acc)
 
-            # Track max timestep reached (for padding later)
-            self.max_timesteps = self.num_timesteps
 
             if self.verbose > 0:
-                print(f"Timestep {self.num_timesteps}: Train Success = {train_acc:.2f}, Test Success = {test_acc:.2f}")
+                logging.info(f"Timestep {self.num_timesteps}: Train Success = {train_acc:.2f}, Test Success = {test_acc:.2f}")
 
             # Check early stopping condition
             if self.early_stopping:
@@ -125,10 +128,9 @@ class PeriodicEvaluationCallback(BaseCallback):
                     self.stagnation_counter = 0  # Reset if test success drops
 
                 if self.stagnation_counter >= self.patience:
-                    print(f"Early stopping triggered at timestep {self.num_timesteps}")
+                    logging.info(f"Early stopping triggered at timestep {self.num_timesteps}")
 
                     # **Apply padding before stopping**
-                    self.get_padded_results(full_length=self.max_timesteps)
                     return False  # Stop training
 
         return True  # Continue training
@@ -182,7 +184,10 @@ def train_and_test_agent(args):
         seed=seed
     )
     model.learn(total_timesteps=total_timesteps, callback=callback)
-    # Return agent type and evaluation results (we only use test_success for final plot)
+
+    full_length = total_timesteps // log_interval  # Expected length
+    callback.get_padded_results(full_length)
+
     return agent_type, callback.eval_timesteps, callback.test_success
 
 # --- Main function ---
@@ -198,6 +203,7 @@ def main():
             for agent_type in agent_types
             for seed in range(ensemble_size)]
 
+    logging.info('Starting training')
     with Pool(processes=n_workers) as pool:
         results_list = pool.map(train_and_test_agent, jobs)
 
