@@ -81,31 +81,72 @@ def evaluate_on_test(model, num_episodes=10):
     return successes / num_episodes
 
 # --- Custom Callback for Periodic Evaluation ---
+# --- Custom Callback for Periodic Evaluation ---
 class PeriodicEvaluationCallback(BaseCallback):
     """
-    A callback that, every log_interval timesteps, evaluates the current model
-    on both the train and test distributions and logs the success rates.
+    A callback that evaluates the current model every log_interval timesteps
+    and logs train/test success rates. Implements early stopping.
     """
-    def __init__(self, log_interval, num_train_episodes=10, num_test_episodes=10, verbose=1):
+    def __init__(self, log_interval, num_train_episodes=10, num_test_episodes=10, 
+                 early_stopping=True, patience=5, verbose=1):
         super().__init__(verbose)
         self.log_interval = log_interval
         self.num_train_episodes = num_train_episodes
         self.num_test_episodes = num_test_episodes
+        self.early_stopping = early_stopping
+        self.patience = patience
         self.eval_timesteps = []
         self.train_success = []
         self.test_success = []
+        self.best_test_success = 0
+        self.stagnation_counter = 0  # Tracks consecutive evaluations at 100% test success
+        self.max_timesteps = 0  # To store the last recorded timestep
 
     def _on_step(self) -> bool:
         if self.num_timesteps % self.log_interval < self.training_env.num_envs:
-            # Evaluate on train and test distributions
+            # Evaluate train & test success
             train_acc = evaluate_on_train(self.model, self.num_train_episodes)
             test_acc = evaluate_on_test(self.model, self.num_test_episodes)
             self.eval_timesteps.append(self.num_timesteps)
             self.train_success.append(train_acc)
             self.test_success.append(test_acc)
+
+            # Track max timestep reached (for padding later)
+            self.max_timesteps = self.num_timesteps
+
             if self.verbose > 0:
                 print(f"Timestep {self.num_timesteps}: Train Success = {train_acc:.2f}, Test Success = {test_acc:.2f}")
-        return True
+
+            # Check early stopping condition
+            if self.early_stopping:
+                if test_acc == 1.0:
+                    self.stagnation_counter += 1
+                else:
+                    self.stagnation_counter = 0  # Reset if test success drops
+
+                if self.stagnation_counter >= self.patience:
+                    print(f"Early stopping triggered at timestep {self.num_timesteps}")
+
+                    # **Apply padding before stopping**
+                    self.get_padded_results(full_length=self.max_timesteps)
+                    return False  # Stop training
+
+        return True  # Continue training
+
+    def get_padded_results(self, full_length):
+        """Pads evaluation data to match the full expected length."""
+        pad_length = (full_length // self.log_interval) - len(self.eval_timesteps)
+
+        if pad_length > 0:
+            last_timestep = self.eval_timesteps[-1]
+            last_train_success = self.train_success[-1]
+            last_test_success = self.test_success[-1]
+
+            self.eval_timesteps += [last_timestep] * pad_length
+            self.train_success += [last_train_success] * pad_length
+            self.test_success += [last_test_success] * pad_length
+
+
 
 # --- Training Function ---
 def train_and_test_agent(args):
@@ -130,7 +171,7 @@ def train_and_test_agent(args):
 
     # Create vectorized training environment using our train env function.
     env = DummyVecEnv([make_train_env])
-    callback = PeriodicEvaluationCallback(log_interval=log_interval, num_train_episodes=10, num_test_episodes=10, verbose=0)
+    callback = PeriodicEvaluationCallback(log_interval=log_interval, num_train_episodes=10, num_test_episodes=10, verbose=1)
 
     model = PPO(
         policy,
@@ -149,7 +190,7 @@ def main():
     ensemble_size = 3
     n_workers = 6
     total_timesteps = 10**5
-    log_interval = int(0.1 * total_timesteps)  # e.g., every 1% of total timesteps
+    log_interval = int(0.01 * total_timesteps)  # e.g., every 1% of total timesteps
     agent_types = ["ppo", "ppo-harmonic"]
 
     # Create jobs: 3 runs per agent type, total 6 runs.
@@ -185,6 +226,7 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.ylim([-0.1,1.1])
+    plt.savefig('data/minigrid_learning_curves.png')
     plt.show()
 
 if __name__ == "__main__":
