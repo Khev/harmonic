@@ -1,4 +1,4 @@
-import os
+import os, pickle
 import gymnasium as gym
 import minigrid
 import numpy as np
@@ -9,6 +9,7 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.vec_env import DummyVecEnv
 from stable_baselines3.common.callbacks import BaseCallback
 from multiprocessing import Pool
+import argparse
 
 from utils.utils_custom_policies import HarmonicPolicy
 
@@ -30,42 +31,55 @@ class CustomFlattenObservation(gym.ObservationWrapper):
         return obs["image"].flatten()
 
 # --- Environment Functions ---
-TRAIN_SEEDS = [0, 1, 2, 3, 4]
-TEST_SEEDS  = [10, 11, 12, 13, 14]
-GRID_SIZE = 6
+TRAIN_SEEDS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  # Increased to 12 seeds
+TEST_SEEDS = [20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]  # Increased to 12 seeds
 
-def make_train_env():
-    """Create a DoorKey environment with a specific train seed."""
-    env = gym.make(f"MiniGrid-DoorKey-{GRID_SIZE}x{GRID_SIZE}-v0")
-    # Instead of choosing randomly, we expect the evaluator to supply a seed.
-    # For training, you may still allow some randomness; here we set one seed per reset.
-    seed = int(np.random.choice(TRAIN_SEEDS))
-    env.reset(seed=seed)
+def make_env(env_name, seed=None, train=True):
+    """Create a MiniGrid environment with a specific name and seed."""
+    # Parse env_name to extract type and grid size (e.g., "DoorKey-8x8" -> "DoorKey", "8x8")
+    env_type, grid_size_str = parse_env_name(env_name)
+    if train:
+        env_id = f"MiniGrid-{env_type}-{grid_size_str}-v0"
+    else:
+        # Use the same grid size for test to ensure consistency (can adjust later)
+        env_id = f"MiniGrid-{env_type}-{grid_size_str}-v0"
+    env = gym.make(env_id)
+    if seed is not None:
+        env.reset(seed=int(seed))
     env = CustomFlattenObservation(env)
     return env
 
-def make_test_env():
-    """Create a DoorKey environment with a specific test seed."""
-    env = gym.make("MiniGrid-DoorKey-5x5-v0")
-    seed = int(np.random.choice(TEST_SEEDS))
-    env.reset(seed=seed)
-    env = CustomFlattenObservation(env)
-    return env
+def parse_env_name(env_name):
+    """Parse the environment name to extract type and grid size (e.g., 'DoorKey-8x8' -> ('DoorKey', '8x8'))."""
+    if '-' not in env_name:
+        raise ValueError(f"Invalid env_name format: {env_name}. Expected format: 'EnvType-GridSize' (e.g., 'DoorKey-8x8')")
+    env_type, size_str = env_name.split('-')
+    try:
+        # Ensure size_str is in 'WxH' format (e.g., "8x8")
+        if 'x' not in size_str:
+            raise ValueError(f"Grid size must be in 'WxH' format (e.g., '8x8'), got {size_str}")
+        # Validate that width and height are integers
+        width, height = map(int, size_str.split('x'))
+        if width <= 0 or height <= 0:
+            raise ValueError(f"Grid dimensions must be positive integers, got {width}x{height}")
+        grid_size = size_str  # Keep as string "8x8" for environment ID
+    except ValueError as e:
+        raise ValueError(f"Grid size must be in 'WxH' format (e.g., '8x8'), got {size_str}: {str(e)}")
+    return env_type, grid_size
 
 # --- Evaluation Functions ---
-def evaluate_on_train(model, num_episodes_per_seed=1):
+def evaluate_on_env(model, env_name, seeds, num_episodes_per_seed=5):
     """
-    Evaluate the model systematically on all TRAIN_SEEDS.
-    Runs num_episodes_per_seed episodes for each seed.
-    Returns the overall success rate.
+    Evaluate the model systematically on the specified seeds for the given environment.
+    Returns the overall success rate and the model for potential saving.
     """
     successes = 0
     total_episodes = 0
-    for s in TRAIN_SEEDS:
+    best_reward = -float('inf')  # Track best reward for model saving
+    best_model = None
+    for s in seeds:
         for _ in range(num_episodes_per_seed):
-            env = gym.make("MiniGrid-DoorKey-5x5-v0")
-            env.reset(seed=int(s))
-            env = CustomFlattenObservation(env)
+            env = make_env(env_name, seed=s, train=False)
             env = DummyVecEnv([lambda: env])
             obs = env.reset()
             done, total_reward = False, 0.0
@@ -74,46 +88,24 @@ def evaluate_on_train(model, num_episodes_per_seed=1):
                 obs, rewards, dones, _ = env.step(action)
                 total_reward += rewards[0]
                 done = dones[0]
-            if total_reward > 0.0:
+            if total_reward > best_reward:
+                best_reward = total_reward
+                best_model = model  # Save the model with the best reward
+            if total_reward > 0.0:  # Assuming positive reward indicates goal reached
                 successes += 1
             total_episodes += 1
-    return successes / total_episodes
-
-def evaluate_on_test(model, num_episodes_per_seed=1):
-    """
-    Evaluate the model systematically on all TEST_SEEDS.
-    Runs num_episodes_per_seed episodes for each seed.
-    Returns the overall success rate.
-    """
-    successes = 0
-    total_episodes = 0
-    for s in TEST_SEEDS:
-        for _ in range(num_episodes_per_seed):
-            env = gym.make("MiniGrid-DoorKey-5x5-v0")
-            env.reset(seed=int(s))
-            env = CustomFlattenObservation(env)
-            env = DummyVecEnv([lambda: env])
-            obs = env.reset()
-            done, total_reward = False, 0.0
-            while not done:
-                action, _ = model.predict(obs, deterministic=True)
-                obs, rewards, dones, _ = env.step(action)
-                total_reward += rewards[0]
-                done = dones[0]
-            if total_reward > 0.0:
-                successes += 1
-            total_episodes += 1
-    return successes / total_episodes
+    return successes / total_episodes, best_model
 
 # --- Custom Callback for Periodic Evaluation ---
 class PeriodicEvaluationCallback(BaseCallback):
     """
     A callback that evaluates the current model every log_interval timesteps
-    and logs train/test success rates. Implements early stopping.
+    and logs train/test success rates. Implements early stopping and tracks best models.
     """
-    def __init__(self, log_interval, num_train_episodes=1, num_test_episodes=1, 
-                 early_stopping=False, patience=5, verbose=1):
+    def __init__(self, env_name, log_interval, num_train_episodes=5, num_test_episodes=5, 
+                 early_stopping=True, patience=3, verbose=1):
         super().__init__(verbose)
+        self.env_name = env_name
         self.log_interval = log_interval
         self.num_train_episodes = num_train_episodes
         self.num_test_episodes = num_test_episodes
@@ -123,18 +115,29 @@ class PeriodicEvaluationCallback(BaseCallback):
         self.train_success = []
         self.test_success = []
         self.stagnation_counter = 0
+        self.best_train_model = None
+        self.best_test_model = None
+        self.best_train_reward = -float('inf')
+        self.best_test_reward = -float('inf')
 
     def _on_step(self) -> bool:
         if self.num_timesteps % self.log_interval < self.training_env.num_envs:
-            train_acc = evaluate_on_train(self.model, self.num_train_episodes)
-            test_acc = evaluate_on_test(self.model, self.num_test_episodes)
+            train_acc, train_model = evaluate_on_env(self.model, self.env_name, TRAIN_SEEDS, self.num_train_episodes)
+            test_acc, test_model = evaluate_on_env(self.model, self.env_name, TEST_SEEDS, self.num_test_episodes)
             self.eval_timesteps.append(self.num_timesteps)
             self.train_success.append(train_acc)
             self.test_success.append(test_acc)
             if self.verbose > 0:
                 logging.info(f"Timestep {self.num_timesteps}: Train Success = {train_acc:.2f}, Test Success = {test_acc:.2f}")
+            # Update best models based on rewards (assuming higher reward = better performance)
+            if train_acc > self.best_train_reward:
+                self.best_train_reward = train_acc
+                self.best_train_model = train_model
+            if test_acc > self.best_test_reward:
+                self.best_test_reward = test_acc
+                self.best_test_model = test_model
             if self.early_stopping:
-                if test_acc == 1.0:
+                if test_acc >= 0.95:  # Adjusted for DoorKey's potential difficulty
                     self.stagnation_counter += 1
                 else:
                     self.stagnation_counter = 0
@@ -145,7 +148,7 @@ class PeriodicEvaluationCallback(BaseCallback):
 
     def get_padded_results(self, full_length):
         """Pads evaluation data to match the expected full length."""
-        pad_length = (full_length // self.log_interval) - len(self.eval_timesteps)
+        pad_length = full_length - len(self.eval_timesteps)
         if pad_length > 0:
             last_timestep = self.eval_timesteps[-1]
             last_train_success = self.train_success[-1]
@@ -154,57 +157,89 @@ class PeriodicEvaluationCallback(BaseCallback):
             self.train_success += [last_train_success] * pad_length
             self.test_success += [last_test_success] * pad_length
 
+    def save_best_models(self, env_name, agent_type):
+        """Save the best models for train and test in the specified directory."""
+        models_dir = os.path.join('models', env_name)
+        os.makedirs(models_dir, exist_ok=True)
+        if self.best_train_model is not None:
+            self.best_train_model.save(os.path.join(models_dir, f'{agent_type}_train_best.pth'))
+            logging.info(f"Saved best train model for {agent_type} on {env_name} to {models_dir}/{agent_type}_train_best.pth")
+        if self.best_test_model is not None:
+            self.best_test_model.save(os.path.join(models_dir, f'{agent_type}_test_best.pth'))
+            logging.info(f"Saved best test model for {agent_type} on {env_name} to {models_dir}/{agent_type}_test_best.pth")
+
 # --- Training Function ---
 def train_and_test_agent(args):
     """
-    args: (agent_type, seed, total_timesteps, log_interval)
-    Trains the model and returns: (agent_type, eval_timesteps, test_success_series)
+    args: (env_name, agent_type, seed, total_timesteps, log_interval)
+    Trains the model and returns: (env_name, agent_type, eval_timesteps, test_success_series)
     """
-    agent_type, seed, total_timesteps, log_interval = args
+    env_name, agent_type, seed, total_timesteps, log_interval = args
     np.random.seed(seed)
     torch.manual_seed(seed)
     policy_kwargs = dict(net_arch=[128, 128, 128])
     if agent_type == "ppo-harmonic":
         policy_kwargs.update(
             distance_norm="L2",
-            harmonic_exponent=128,
+            harmonic_exponent=128,  # Can be tuned
             weight_reg=0.01
         )
         policy = HarmonicPolicy
     else:
         policy = "MlpPolicy"
-    env = DummyVecEnv([make_train_env])
-    callback = PeriodicEvaluationCallback(log_interval=log_interval, num_train_episodes=1, num_test_episodes=1, verbose=1)
+    env = DummyVecEnv([lambda: make_env(env_name, train=True)])
+    callback = PeriodicEvaluationCallback(env_name, log_interval=log_interval, num_train_episodes=5, num_test_episodes=5, verbose=1)
     model = PPO(
         policy,
         env,
         policy_kwargs=policy_kwargs,
         learning_rate=1e-4,
         verbose=0,
+        ent_coef=0.1,
         seed=seed
     )
-    logging.info("Starting training")
+    logging.info(f"Starting training for {agent_type} on {env_name} with seed {seed}")
     model.learn(total_timesteps=total_timesteps, callback=callback)
     full_length = total_timesteps // log_interval
     callback.get_padded_results(full_length)
-    return agent_type, callback.eval_timesteps, callback.test_success
+    # Save the best models after training
+    callback.save_best_models(env_name, agent_type)
+    return env_name, agent_type, callback.eval_timesteps, callback.test_success
 
-# --- Main function ---
+# --- Main Function ---
 def main():
-    ensemble_size = 3
-    n_workers = 6
-    total_timesteps = 5 * 10**5
-    log_interval = int(0.2 * total_timesteps)
+    parser = argparse.ArgumentParser(description="Train and evaluate PPO/PPO-Harmonic on MiniGrid environments.")
+    parser.add_argument('--env_name', type=str, default='DoorKey-5x5', help='Environment name (e.g., DoorKey-5x5, DoorKey-8x8, MultiRoom-6x6)')
+    parser.add_argument('--ensemble_size', type=int, default=3, help='Number of ensemble seeds per agent type (default: 24)')
+    parser.add_argument('--total_timesteps', type=int, default=1000, help='Total training timesteps per agent (default: 7.5e6)')
+    parser.add_argument('--log_interval', type=int, default=None, help='Evaluation interval in timesteps (default: 0.005 * total_timesteps)')
+    parser.add_argument('--n_workers', type=int, default=6, help='Number of parallel workers (default: 6)')
+    args = parser.parse_args()
+
+    if args.log_interval is None:
+        args.log_interval = int(0.005 * args.total_timesteps)
+        args.log_interval = 1000
+
     agent_types = ["ppo", "ppo-harmonic"]
-    jobs = [(agent_type, seed, total_timesteps, log_interval)
+    jobs = [(args.env_name, agent_type, seed, args.total_timesteps, args.log_interval)
             for agent_type in agent_types
-            for seed in range(ensemble_size)]
-    logging.info('Starting ensemble training')
-    with Pool(processes=n_workers) as pool:
+            for seed in range(args.ensemble_size)]
+    logging.info(f'Starting ensemble training on {args.env_name} with {args.ensemble_size} seeds per agent type')
+
+    with Pool(processes=args.n_workers) as pool:
         results_list = pool.map(train_and_test_agent, jobs)
+
     results = {agent_type: [] for agent_type in agent_types}
-    for agent_type, timesteps, test_success in results_list:
+    for env_name, agent_type, timesteps, test_success in results_list:
         results[agent_type].append((timesteps, test_success))
+
+    # Save the results dictionary
+    results_path = os.path.join('figures', f'{args.env_name}_results.pkl')
+    os.makedirs(os.path.dirname(results_path), exist_ok=True)
+    with open(results_path, 'wb') as f:
+        pickle.dump(results, f)
+    logging.info(f"Saved results data to {results_path}")
+
     plt.figure(figsize=(10, 6))
     for agent_type, curves in results.items():
         all_test_success = np.array([curve[1] for curve in curves])
@@ -216,11 +251,12 @@ def main():
         plt.fill_between(x, min_test, max_test, alpha=0.3)
     plt.xlabel("Timesteps")
     plt.ylabel("Test Success Rate")
-    plt.title("Generalization Learning Curve: PPO vs PPO-Harmonic")
+    plt.title(f"Generalization Learning Curve: {args.env_name}")
     plt.legend()
     plt.grid(True)
     plt.ylim([0, 1])
-    plt.savefig(f'data/doorkey{GRID_SIZE}_learning_curves.png')
+    os.makedirs('figures', exist_ok=True)
+    plt.savefig(f'figures/{args.env_name}_learning_curves.png')
     plt.show()
 
 if __name__ == "__main__":
