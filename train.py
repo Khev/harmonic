@@ -98,8 +98,8 @@ def get_env(env_name):
         env_test = gridWorldPartial()
 
     elif env_name == 'maze_world':
-        mode = 'easy_medium'
-        #mode = 'medium'
+        #mode = 'easy_medium'
+        mode = 'medium'
         env_train, env_test = MazeEnv(mode=mode), MazeEnv(mode=mode)
 
     elif env_name == 'maze_world_random':
@@ -366,7 +366,7 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Train PG agent on gridWorld with ensemble and multiprocessing.")
-    parser.add_argument('--env_name', type=str, default='maze_world_random', help='Env name')
+    parser.add_argument('--env_name', type=str, default='maze_world', help='Env name')
     parser.add_argument('--agent', type=str, default='pg', help='Agent type.')
     parser.add_argument('--Ntrain', type=int, default=5*10**4, help='Number of training timesteps per agent.')
     parser.add_argument('--layer_type', type=str, choices=['softmax', 'harmonic'], default='harmonic', help='Layer type.')

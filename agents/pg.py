@@ -7,15 +7,15 @@ import numpy as np
 class PG(nn.Module):
     def __init__(self, 
                  env, 
-                 hidden_dim=64, 
-                 embedding_dim=16, 
+                 hidden_dim=16,  #64
+                 embedding_dim=4, 
                  layer_type='softmax', 
                  distance_norm='L2', 
                  lr=0.001, # 0.001
                  gamma=0.99, 
-                 n_layers=3, 
+                 n_layers=2, 
                  dropout_prob=0.3, 
-                 harmonic_exponent=4, 
+                 harmonic_exponent=4, #4
                  weight_reg=0.00):
         super(PG, self).__init__()
 

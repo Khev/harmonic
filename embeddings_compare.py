@@ -138,7 +138,7 @@ class RewardCallback:
             test_acc = self._compute_accuracy(self.env_eval)
             self.test_acc.append(test_acc)
             print(Fore.WHITE + f"[{datetime.now().strftime('%H:%M:%S')}] Episode {self.current_episode}: acc_train, acc_test: {train_acc:.2f}%, {test_acc:.2f}%" + Style.RESET_ALL)
-            if self.early_stopping and test_acc == 100.0:
+            if self.early_stopping and test_acc == 100.0 and train_acc == 100.0:
                 print(Fore.GREEN + f"Early stopping triggered at episode {self.current_episode} with test accuracy of 100%!" + Style.RESET_ALL)
                 self.early_stop = True
                 return False
@@ -210,10 +210,12 @@ def save_results(results, save_dir, agent, approach_label):
         json.dump(results, f)
 
 
-def plot_actions_and_states_ax(model, env, approach_label='softmax', ax=None):
+
+def plot_actions_and_states_ax(model, env, approach_label='softmax', ax=None, save_dir='./embeddings'):
     """
     Plots the PCA of state embeddings and (optionally) action embeddings.
     Shows the explained variance of PC1 and PC2 in the subplot title.
+    Also saves the state and action embeddings to files.
     """
     moves = {0: "Left", 1: "Right", 2: "Down", 3: "Up"}
     H, W = env.grid_size
@@ -249,6 +251,10 @@ def plot_actions_and_states_ax(model, env, approach_label='softmax', ax=None):
     else:
         combined = state_features_np
 
+    np.save(os.path.join(save_dir, f"{approach_label}_states_embeddings.npy"), state_features_np)
+    if action_features_np is not None:
+        np.save(os.path.join(save_dir, f"{approach_label}_actions_embeddings.npy"), action_features_np)
+
     # 5. PCA
     pca = PCA(n_components=2)
     combined_2d = pca.fit_transform(combined)
@@ -258,7 +264,15 @@ def plot_actions_and_states_ax(model, env, approach_label='softmax', ax=None):
     states_2d = combined_2d[:n_states]
     actions_2d = combined_2d[n_states:] if action_features_np is not None else None
 
-    # 6. Plotting
+    # 6. Save embeddings to files
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    
+    # np.save(os.path.join(save_dir, f"{approach_label}_states_embeddings.npy"), states_2d)
+    # if actions_2d is not None:
+    #     np.save(os.path.join(save_dir, f"{approach_label}_actions_embeddings.npy"), actions_2d)
+
+    # 7. Plotting
     if ax is None:
         fig, ax = plt.subplots(figsize=(7,7))
 
@@ -282,7 +296,7 @@ def plot_actions_and_states_ax(model, env, approach_label='softmax', ax=None):
             ax.text(actions_2d[i, 0], actions_2d[i, 1],
                     f"{action_label}", fontsize=9, ha='center', va='bottom')
 
-    # 7. Update title with explained variance
+    # 8. Update title with explained variance
     pc1_var = pc_variance[0] * 100.0
     pc2_var = pc_variance[1] * 100.0
     ax.set_title(f"{approach_label} (PC1={pc1_var:.1f}%, PC2={pc2_var:.1f}%)")
@@ -292,6 +306,7 @@ def plot_actions_and_states_ax(model, env, approach_label='softmax', ax=None):
     ax.legend()
     ax.grid(True)
     return ax
+
 
 
 
@@ -391,7 +406,7 @@ def main(args):
         args.layer_type = ltype
         args.distance_norm = dist
         args.ensemble_size = 1  # single model
-        model, env_train, train_acc, test_acc = run_training(args, seed=0)
+        model, env_train, train_acc, test_acc = run_training(args, seed=1)  # seed=0
         models_envs[label] = (model, env_train)
         results[label] = (train_acc, test_acc)
 
@@ -410,10 +425,10 @@ def main(args):
     print(f"Saved combined figure to: {combined_outpath}")
     plt.show()
 
-    # Optionally, plot ensemble curves for each approach.
-    for label in results:
-        train_acc, test_acc = results[label]
-        plot_ensemble_curves([train_acc], [test_acc], args.save_dir, args.log_interval, args.Ntrain, label)
+    #Optionally, plot ensemble curves for each approach.
+    # for label in results:
+    #     train_acc, test_acc = results[label]
+    #     plot_ensemble_curves([train_acc], [test_acc], args.save_dir, args.log_interval, args.Ntrain, label)
 
     save_results(results, args.save_dir, args.agent, "comparison")
 
@@ -422,16 +437,16 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Train PG agent on MazeEnv or gridWorld with ensemble and multiprocessing.")
     parser.add_argument('--env_name', type=str, default='maze_world', help='Env name')
     parser.add_argument('--agent', type=str, default='pg', help='Agent type.')
-    parser.add_argument('--Ntrain', type=int, default=5*10**4, help='Number of training timesteps per agent.')
+    parser.add_argument('--Ntrain', type=int, default=5*10**5, help='Number of training timesteps per agent.')
     parser.add_argument('--layer_type', type=str, choices=['softmax', 'harmonic'], default='softmax', help='Layer type.')
     parser.add_argument('--distance_norm', type=str, choices=['L1', 'L2'], default='L2', help='Distance norm for harmonic layer.')
     parser.add_argument('--n_layers', type=int, default=2, help='Number of layers in the PG agent.')
-    parser.add_argument('--harmonic_exponent', type=int, default=4, help='Harmonic exponent.')
+    parser.add_argument('--harmonic_exponent', type=int, default=1, help='Harmonic exponent.')
     parser.add_argument('--ensemble_size', type=int, default=1, help='Number of ensemble agents.')
     parser.add_argument('--save_dir', type=str, default='./data', help='Directory to save results.')
     parser.add_argument('--parallel', action='store_true', help='Flag to use parallel training.')
     parser.add_argument('--num_workers', type=int, default=5, help='Number of parallel workers.')
-    parser.add_argument('--log_interval', type=int, default=None, help='Logging interval.')
+    parser.add_argument('--log_interval', type=int, default=5000, help='Logging interval.')
     parser.add_argument('--mode', type=str, default='easy_medium', help='Mode for MazeEnv (e.g., "easy", "medium", "hard").')
     args = parser.parse_args()
 
