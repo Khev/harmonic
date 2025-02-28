@@ -1,4 +1,4 @@
-import os, pickle
+import os, pickle, time
 import gymnasium as gym
 import minigrid
 import numpy as np
@@ -226,12 +226,20 @@ def main():
             for seed in range(args.ensemble_size)]
     logging.info(f'Starting ensemble training on {args.env_name} with {args.ensemble_size} seeds per agent type')
 
+    start_time = time.time()
+
     with Pool(processes=args.n_workers) as pool:
         results_list = pool.map(train_and_test_agent, jobs)
 
     results = {agent_type: [] for agent_type in agent_types}
     for env_name, agent_type, timesteps, test_success in results_list:
         results[agent_type].append((timesteps, test_success))
+
+    end_time = time.time()  # End timing
+    total_time = end_time - start_time
+    hours, remainder = divmod(int(total_time), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    logging.info(f"Total time: {hours:02}:{minutes:02}:{seconds:02}")  # Log final execution time
 
     # Save the results dictionary
     results_path = os.path.join('figures', f'{args.env_name}_results.pkl')
