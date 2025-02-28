@@ -235,18 +235,18 @@ def main():
     for env_name, agent_type, timesteps, test_success in results_list:
         results[agent_type].append((timesteps, test_success))
 
-    end_time = time.time()  # End timing
-    total_time = end_time - start_time
-    hours, remainder = divmod(int(total_time), 3600)
-    minutes, seconds = divmod(remainder, 60)
-    logging.info(f"Total time: {hours:02}:{minutes:02}:{seconds:02}")  # Log final execution time
-
     # Save the results dictionary
     results_path = os.path.join('figures', f'{args.env_name}_results.pkl')
     os.makedirs(os.path.dirname(results_path), exist_ok=True)
     with open(results_path, 'wb') as f:
         pickle.dump(results, f)
     logging.info(f"Saved results data to {results_path}")
+
+    end_time = time.time()  # End timing
+    total_time = end_time - start_time
+    hours, remainder = divmod(int(total_time), 3600)
+    minutes, seconds = divmod(remainder, 60)
+    logging.info(f"Total time: {hours:02}:{minutes:02}:{seconds:02}")  # Log final execution time
 
     plt.figure(figsize=(10, 6))
     for agent_type, curves in results.items():
