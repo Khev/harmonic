@@ -80,7 +80,9 @@ def train_agent(args):
         policy = "MlpPolicy"
 
     # Create environment and wrap it
-    env = gym.make("MiniGrid-DoorKey-5x5-v0")
+    #env_name = 'MiniGrid-DoorKey-5x5-v0'
+    env_name = 'BabyAI-KeyCorridorS3R3-v0'
+    env = gym.make(env_name)
     env = CustomFlattenObservation(env)
     env = DummyVecEnv([lambda: env])
 
@@ -89,13 +91,17 @@ def train_agent(args):
                 learning_rate=1e-4, verbose=0, seed=seed)
     callback = StepRewardLoggingCallback(verbose=0)
     model.learn(total_timesteps=total_timesteps, callback=callback)
+
+    model_dir = f'models/minigrid/{env_name}/{agent_type}_{seed}'
+    model.save(model_dir)
+
     return agent_type, callback.timesteps, callback.step_rewards
 
 # --- Main function to run ensemble ---
 def main():
     ensemble_size = 3
     n_workers = 6
-    total_timesteps = 10**5
+    total_timesteps = 10**6
     agent_types = ["ppo", "ppo-harmonic"]
 
     # Create jobs for both agent types (2 x 3 = 6 runs)
@@ -123,7 +129,7 @@ def main():
         max_rewards = np.max(all_rewards, axis=0)
         # Use timesteps from the first run
         x = curves[0][0]
-        plt.plot(x, mean_rewards, label=agent_type.upper())
+        plt.plot(x, mean_rewards, label=agent_type.upper(), alpha=0.7)
         plt.fill_between(x, min_rewards, max_rewards, alpha=0.3)
     plt.xlabel("Timesteps")
     plt.ylabel("Episode Reward")
@@ -131,6 +137,8 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.show()
+
+
 
 if __name__ == '__main__':
     main()
