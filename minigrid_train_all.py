@@ -19,6 +19,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s", date
 
 # ANSI color codes for logging
 GREEN = "\033[32m"
+RED = "\033[31m"  # Red color code
 MAGENTA = "\033[35m"
 RESET = "\033[0m"
 
@@ -166,7 +167,7 @@ def train_and_test_agent(args):
 def main():
     parser = argparse.ArgumentParser(description="Train and evaluate PPO/PPO-Harmonic on multiple BabyAI/MiniGrid envs.")
     parser.add_argument('--ensemble_size', type=int, default=4, help='Number of ensemble seeds per agent type (default: 4)')
-    parser.add_argument('--total_timesteps', type=int, default=10**7, help='Total training timesteps per agent (default: 1e6)')
+    parser.add_argument('--total_timesteps', type=int, default=5*10**7, help='Total training timesteps per agent (default: 1e6)')
     parser.add_argument('--n_workers', type=int, default=8, help='Number of parallel workers (default: 6)')
     parser.add_argument('--harmonic_exponent', type=int, default=128, help='Harmonic exponent for PPO-Harmonic (default: 128)')
     # Add distance_norm argument with default="L2"
@@ -174,38 +175,20 @@ def main():
 
     args = parser.parse_args()
 
-    # Pick 4 environments
     # envs = [
-    #     "MiniGrid-DoorKey-8x8-v0",     
-    #     "MiniGrid-LockedRoom-v0",      
-    #     "MiniGrid-RedBlueDoors-8x8-v0",
-    #     "MiniGrid-MultiRoom-N6-v0"     
-    # ]
+    #     "MiniGrid-LavaCrossingS9N1-v0",
+    #     "MiniGrid-LavaCrossingS9N2-v0",
+    #     "MiniGrid-LavaCrossingS9N3-v0",
+    #     "MiniGri[d-LavaCrossingS11N5-v0"
+    # ][1:]
 
-    # Easier
-    # Slightly more difficult
-    # envs = [
-    #     "MiniGrid-DoorKey-8x8-v0",        # Solved in 10^6 steps
-    #     "MiniGrid-MultiRoom-N2-S4-v0",    # Smallest multi-room navigation task
-    #     "MiniGrid-RedBlueDoors-6x6-v0",
-    #     "MiniGrid-LockedRoom-v0",         # More complex navigation with locked doors
-    # ]
 
     envs = [
-        "MiniGrid-LavaCrossingS9N1-v0",
-        "MiniGrid-LavaCrossingS9N2-v0",
-        "MiniGrid-LavaCrossingS9N3-v0",
-        "MiniGrid-LavaCrossingS11N5-v0"
+        # 'BabyAI-KeyCorridorS3R3-v0',
+        #'BabyAI-KeyCorridorS4R3-v0',  # no success
+        'MiniGrid-DoorKey-8x8-v0',  # Corrected from "MiniGri[d..." and aligned with prior suggestion
+        #'BabyAI-UnlockPickup-v0'     # Added as the fourth similar environment
     ]
-
-
-    # Baby AI env
-    # envs = [
-    #     "BabyAI-GoToObj-v0",     # Simple task: Navigate to a target object
-    #     "BabyAI-OpenDoor-v0",    # New: Open a door to reach the target
-    #     "BabyAI-Explore-N2-v0",  # Exploration task in a more open environment
-    #     "BabyAI-Interact-N2-v0"  # Interaction with objects in the environment
-    # ]
 
 
     # Store hyperparams, including distance_norm
@@ -219,6 +202,7 @@ def main():
 
     agent_types = ["ppo", "ppo-harmonic"]
     log_interval = int(0.01 * args.total_timesteps)
+    #log_interval = int(0.5 * args.total_timesteps)
 
     for env_name in envs:
         jobs = [
@@ -241,11 +225,14 @@ def main():
         with Pool(processes=args.n_workers) as pool:
             results_list = pool.map(train_and_test_agent, jobs)
 
-        # Save results in correct format
-        all_results = {agt: [] for agt in agent_types}
+        # Save results in correct format and compute mean +- std for each trial
+        all_results = {agt: {'train_acc': [], 'test_acc': [], 'time_steps':[]} for agt in agent_types}
         for e_name, agt, timesteps, train_acc, test_acc in results_list:
-            all_results[agt].append((timesteps, train_acc, test_acc))
+            #all_results[agt]['time_steps'].append(timesteps)
+            all_results[agt]['train_acc'].append(train_acc)
+            all_results[agt]['test_acc'].append(test_acc)
 
+        # Save the full time series of train and test accuracies
         results_path = f'models/{env_name}/learning_data.pkl'
         hyperparams_path = f'models/{env_name}/hyperparams.pkl'
         os.makedirs(os.path.dirname(results_path), exist_ok=True)
@@ -254,6 +241,15 @@ def main():
             pickle.dump(all_results, f)
         with open(hyperparams_path, 'wb') as f:
             pickle.dump(hyperparams, f)
+
+        # Calculate mean and std for train and test accuracies
+        for agt in agent_types:
+            train_acc_mean = np.mean(all_results[agt]['train_acc'], axis=0)
+            train_acc_std = np.std(all_results[agt]['train_acc'], axis=0)
+            test_acc_mean = np.mean(all_results[agt]['test_acc'], axis=0)
+            test_acc_std = np.std(all_results[agt]['test_acc'], axis=0)
+
+            logging.info(f"\n{RED}{env_name} - {agt.upper()}: Train Acc = {train_acc_mean[-1]:.2f} ± {train_acc_std[-1]:.2f}, Test Acc = {test_acc_mean[-1]:.2f} ± {test_acc_std[-1]:.2f}{RESET}\n")
 
         logging.info(f"Saved results to {results_path} and hyperparams to {hyperparams_path}")
 

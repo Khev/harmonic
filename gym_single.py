@@ -142,7 +142,7 @@ def main():
     parser = argparse.ArgumentParser(description="Train PPO/PPO-Harmonic on an environment")
     parser.add_argument("--env_name", type=str, default="CartPole-v1",
                         help="Gym environment name (default: CartPole-v1)")
-    parser.add_argument("--total_timesteps", type=int, default=10000,
+    parser.add_argument("--total_timesteps", type=int, default=10000000,
                         help="Total timesteps (default: 10000)")
     args = parser.parse_args()
 
@@ -150,7 +150,7 @@ def main():
     print(f"Running {args.env_name}")
     print("-" * 25 + "\n")
 
-    ensemble_size = 3
+    ensemble_size = 12
     n_workers = 6
     agent_types = ["ppo", "ppo-harmonic"]
 

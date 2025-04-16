@@ -185,9 +185,9 @@ def train_and_test_agent(args):
 # --- Main Function ---
 def main():
     parser = argparse.ArgumentParser(description="Train and evaluate PPO/PPO-Harmonic on any MiniGrid environment.")
-    parser.add_argument('--env_name', type=str, default='BabyAI-KeyCorridorS3R3-v0')
+    parser.add_argument('--env_name', type=str, default='BabyAI-UnlockPickup-v0')
     parser.add_argument('--ensemble_size', type=int, default=12, help='Number of ensemble seeds per agent type (default: 6)')
-    parser.add_argument('--total_timesteps', type=int, default=2*10**7, help='Total training timesteps per agent (default: 10**5)')
+    parser.add_argument('--total_timesteps', type=int, default=5*10**7, help='Total training timesteps per agent (default: 10**5)')
     parser.add_argument('--log_interval', type=int, default=None, help='Evaluation interval in timesteps (default: 1000)')
     parser.add_argument('--n_workers', type=int, default=6, help='Number of parallel workers (default: 6)')
     args = parser.parse_args()
