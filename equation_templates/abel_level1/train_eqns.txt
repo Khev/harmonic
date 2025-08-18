@@ -1,0 +1,16 @@
+x/c
+c + x
+-c + x
+x/a
+sin(x)
+x/b
+c*x
+-b + x
+-a + x
+x**2
+b*x
+a*x
+a + x
+sqrt(x)
+cos(x)
+log(x)

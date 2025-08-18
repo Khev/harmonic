@@ -1,0 +1,26 @@
+log(a*x)
+b*(-b + x)
+c*x**2
+log(x)/c
+b*x + b
+-c + sin(x)
+c + x/c
+cos(x**2)
+sin(x)/b
+sin(x)**2
+a + x
+a*c*x
+2*b + x
+(c + x)/a
+sqrt(x)/a
+c*sqrt(x)
+-c + x/a
+sin(c + x)
+sqrt(sin(x))
+cos(sin(x))
+-c + x**2
+(b + x)/a
+a*x - b
+-2*b + x
+a*x**2
+sin(log(x))

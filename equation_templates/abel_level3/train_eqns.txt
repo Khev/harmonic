@@ -1,0 +1,3487 @@
+sqrt(log(cos(x)))
+a + cos(sqrt(x))
+cos(log(x/b))
+a*sin(x) - c
+(a*x - c)/a
+a + c*(c + x)
+-c + sin(x/b)
+cos(a + x)**2
+b*(-c + x) + b
+2*c + x/b
+log(b*x/a)
+c + (-b + x)/a
+(c + x)**4
+sqrt(-c + x)/c
+sqrt(-b + x)
+-2*a - b + x
+sqrt(a*sqrt(x))
+a + sin(sin(x))
+2*b + cos(x)
+-c + (a + x)**2
+-c + sqrt(sin(x))
+log(log(x/c))
+b*(c*x - c)
+b*(a*x + b)
+a*x/c + b
+a*cos(x) + c
+cos(b + x)
+(a + b + x)**2
+c*sqrt(-a + x)
+a*log(c*x)
+sqrt(log(sin(x)))
+sin(c*x)**2
+-b + log(c + x)
+b*log(x/a)
+a + b*sin(x)
+(-c + x**2)/a
+(-2*a + x)/c
+b*(b + x) + b
+-2*a + b*x
+a*(c + sin(x))
+c*(c + x) + c
+-c + x**2/c**2
+-a + (-c + x)/b
+cos(cos(b - x))
+-b + sqrt(x**2)
+sin(x)**2/a
+c**2*cos(x)
+c*log(x)**2
+(a + x)/c
+b*x + b
+log(-a + x)/b
+(-2*a + x)/a
+x**2/(a*c**2)
+sqrt(-c + sin(x))
+log(x/c)
+(-a + x)**2/c
+(a + x)/a**2
+a + (b + x)**2
+sqrt(b*sqrt(x))
+c**2*(c + x)
+-b + (c + x)/c
+sqrt(-2*c + x)
+cos((-b + x)/c)
+b*sin(b*x)
+b*x/c**2
+log(x/a)/c
+log(c*(-b + x))
+b*(-c + x/b)
+log(sqrt(cos(x)))
+(a + x/b)/c
+a*cos(x)/b
+sin(a + c*x)
+-b + sqrt(x)/b
+(a + c + x)**2
+-b + x/a
+b**2*x**2 + c
+sin(c*(-a + x))
+c + (c + x)/b
+sqrt(b + x)
+sin((c + x)/b)
+-c + sqrt(x/b)
+b + x/b**2
+cos(sin(log(x)))
+sqrt(-a + x/c)
+log(x)**2/a**2
+sqrt(-b + x)/b
+-b - c + x/b
+cos(cos(b*x))
+a*(b + x/c)
+-3*a + x
+cos(b*cos(x))
+b*(-c + x)/c
+-c + x**2/b**2
+(b + sin(x))/a
+-b - c + sqrt(x)
+a + b + x/b
+a - b + c*x
+c*log(sin(x))
+cos(c + x)
+c - sin(c - x)
+a*(b + x)
+a*x - a + b
+sin(sin(x))
+log(-a + b + x)
+-c + (-a + x)/a
+b*(a*x + a)
+log(sqrt(x**2))
+a**2*x**2 - a
+a*sin(x) + c
+sin(log(x/a))
+c*x**2/b**2
+-a*sin(a - x)
+b**2*sin(x)**2
+-a - b + c + x
+2*c + x**2
+(-b + x)/(b*c)
+cos(-a + c + x)
+log(c*(-a + x))
+c*(-a + x/c)
+cos(a*(c + x))
+-c + log(sin(x))
+(c + sin(x))/a
+a*x**2 - c
+(a - c + x)/b
+a*x - c
+b + c*(-c + x)
+-a + b*x**2
+c*(-c + x)/a
+-sin(a - cos(x))
+-a + c + x**2
+log(-c + x)
+-c + sqrt(x)
+sin(a - b + x)
+sqrt(a*x)/b
+c**2*x**2/b
+b + c + cos(x)
+sqrt(b*x - c)
+a**4*x**4
+-b + log(x)**2
+-c + cos(cos(x))
+-sin(a - x)/a
+sin(sqrt(c*x))
+a*b*(-a + x)
+sqrt((b + x)/b)
+sqrt(x**2)
+cos(a - c*x)
+a + x/(b*c)
+a + cos(a - x)
+x**2/(a*c)
+b**2*(b + x)**2
+(-b + cos(x))**2
+cos(x)/(a*c)
+sin((b + x)/a)
+sqrt(b*log(x))
+cos(log(a + x))
+cos(log(b*x))
+-c + (b + x)**2
+b*(-a + x)/a
+x**2/(b*c**2)
+sqrt(-b - c + x)
+sin(log(x)/c)
+sin(x**2)/c
+2*b + x/a
+sin(b*c*x)
+-b + c + sin(x)
+c*(b*x + c)
+a*(-2*a + x)
+a*(-c + log(x))
+a*b*x/c
+x/c
+c*sin(x)/a
+(-c + sqrt(x))/c
+-c + (a + x)/c
+b*log(x/b)
+b*(-a + x)
+b*c*(-b + x)
+(-2*a + x)/b
+c**2*(c + x)**2
+a*log(x/c)
+-c + x**2/a
+-c + (b + x)/c
+(c + log(x))/b
+c*cos(a + x)
+-a - c + x/b
+b*log(b + x)
+c*(-b + log(x))
+a*sin(x)**2
+c*cos(b + x)
+sqrt(cos(x))/b
+cos(b*sqrt(x))
+sqrt(-sin(b - x))
+(b + x)**2
+log(sqrt(c + x))
+b*(-a + b*x)
+sin(x)/c
+(a*x - b)/a
+c + log(c*x)
+(-b + log(x))/b
+2*a + c + x
+sqrt((-c + x)/b)
+sqrt((a + x)/b)
+cos(c + x/b)
+-c + sqrt(cos(x))
+(-a + x)/a**2
+a*(b + x/a)
+a + log(x)**2
+a*(-a + sin(x))
+sin(c*x/a)
+log(x/c**2)
+sqrt(-c + cos(x))
+-sin(sin(a - x))
+sqrt(b + x/b)
+log(log(x**2))
+-sin(b - cos(x))
+log(a*x - a)
+cos(sqrt(sin(x)))
+c + (a + x)/c
+sin(a + c + x)
+sqrt((-a + x)**2)
+cos(b*x)/a
+cos(b*(-a + x))
+(-2*c + x)**2
+a + b*(-a + x)
+c**2*x
+log(x/b)/a
+(-b + c + x)/b
+-c + (a + x)/a
+-c*sin(a - x)
+-2*b + x
+-c + sqrt(x/a)
+sin(x/a)/b
+-b + (c + x)/a
+a*c*x + a
+-c + sin(log(x))
+-a + b*(b + x)
+x/b**2
+sin(x**4)
+a**2*cos(x)**2
+c + (a + x)/b
+sqrt(a*(b + x))
+a*cos(c*x)
+sin(b*(a + x))
+cos(b*x)/c
+-a + x**4
+b + c + x/c
+log(x)/c
+sqrt(x**2/a)
+b**3*x
+log(a*(b + x))
+sin(sqrt(b + x))
+log((-c + x)/c)
+(b + c + x)/b
+sqrt(cos(x/a))
+c**2*(b + x)
+a*x + a - c
+2*a + x/a
+b*(-b - c + x)
+-a + x/a
+(-a + b + x)**2
+sqrt(-a - c + x)
+b*(a + x)/a
+(-c + x**2)/b
+log(-b + x)/b
+sqrt(b*(-b + x))
+log(-a + x)
+sqrt(a + x)/b
+-a + cos(x/c)
+(-c + x)/c
+-a + sqrt(-c + x)
+(2*c + x)/b
+b*c*(-c + x)
+c + (-a + x)/b
+c*(a - c + x)
+log(x)/(b*c)
+log(-b + sin(x))
+x**2/(a**2*c**2)
+a*(-a + x/b)
+2*b + x/b
+b + x/a
+-a + b + c + x
+b*log(x)/a
+(b + sin(x))/c
+c + cos(x**2)
+b*log(-a + x)
+sqrt(sin(x/c))
+b*sqrt(x) - c
+(-2*b + x)/c
+a*sin(c + x)
+log(x/b)/b
+c + c*x/b
+a*(a + sin(x))
+cos(c*(c + x))
+(a*x - b)/c
+b*(c + x) + c
+a*log(-a + x)
+(b + c*x)**2
+-b + (b + x)/c
+2*a + x/c
+(-a + x)**2/c**2
+a*b**2*x
+log(sin(log(x)))
+b + (a + x)/b
+a + b*cos(x)
+sin(sin(sin(x)))
+(b + x/a)/b
+b**2*c*x**2
+b*sqrt(c + x)
+log(sin(b + x))
+a + log(c*x)
+b*(-b + c + x)
+-a + c*(-a + x)
+b + c + log(x)
+b*sqrt(-a + x)
+(-b + x/c)**2
+sqrt(a + x/c)
+c + cos(c - x)
+c + sin(x)
+c*(-2*c + x)
+(-b + sin(x))/a
+c*sin(x/c)
+cos(c*x)/c
+(-b + x/b)/b
+cos(cos(a + x))
+-c + log(x)/b
+a*sqrt(x)
+sqrt(sqrt(x)/b)
+sin(c*(c + x))
+sqrt(c*(b + x))
+-a + (b + x)/a
+-a + sin(cos(x))
+-a + c*(-c + x)
+b + c + x/a
+cos(a*x + c)
+b*c*x + c
+a**2*x + a
+c*(c + x)**2
+-a + (c + x)/c
+c*(a + x**2)
+cos(cos(cos(x)))
+b*(a + x)**2
+a*(c + x)**2
+a + (c + x)**2
+-b + sqrt(x/c)
+log(-b + cos(x))
+a + b + c*x
+-b + x**2/b
+(-2*a + x)**2
+(a - c + x)/a
+log(sqrt(a*x))
+a - 2*b + x
+(-c + x)/(a*b)
+(-a + x)/c**2
+sqrt(-b + x/b)
+a + x**4
+log(sin(x))/c
+log(a + x/c)
+b + log(-b + x)
+a**2*x - a
+a*b*c*x
+b*(c + x**2)
+c*x**2/a**2
+-c + cos(x**2)
+sin(x**(1/4))
+log(sqrt(log(x)))
+-c + log(c*x)
+log(b + sin(x))
+-sin(a - sin(x))
+sin(cos(x**2))
+(b*x + b)/a
+-c + (c + x)**2
+cos(x**4)
+cos(a*x - c)
+log(-b + x/c)
+log(x/b**2)
+b*(a + x) + c
+x**(1/4)/b
+(-c + sin(x))/a
+c*(-b + x/a)
+sin(x/a)
+(a*x - a)**2
+c + sin(c*x)
+a*cos(a - x)
+(-c + sin(x))/c
+b*cos(cos(x))
+sin(a*log(x))
+b + cos(sin(x))
+2*c + cos(x)
+a + x**2/c
+log(c*(-c + x))
+c + (-c + x)/b
+c*(-2*a + x)
+cos(log(c*x))
+-b + (a + x)/c
+a + b**2*x
+a + (-c + x)/a
+a + c*(b + x)
+(b + cos(x))/c
+b*c*(a + x)
+b*c*sin(x)
+sin(log(log(x)))
+c + (-c + x)**2
+a*(-c + x)
+a + (-a + x)/c
+(a + x)/b**2
+cos(cos(x))/c
+c**2*x**4
+b*(a + cos(x))
+-c + sqrt(b + x)
+cos(x/(a*c))
+log(-b + x/b)
+b*(-2*a + x)
+(b + cos(x))/b
+a*cos(sqrt(x))
+log(cos(x))/a
+sqrt(cos(x)/c)
+c*sin(b + x)
+sin(x/a)**2
+b + c*x/a
+log(sin(x)**2)
+sin(sqrt(x))**2
+a*(-a + x)/c
+a*(-a + x)/b
+-a + (-b + x)**2
+cos(2*c - x)
+log(x**2)
+a*(-2*c + x)
+cos(cos(a - x))
+a*(-b + sqrt(x))
+log(sin(cos(x)))
+a + a*x/b
+-a - c + log(x)
+cos(log(a*x))
+cos(a*(a + x))
+sqrt(sin(x)/c)
+log(sqrt(x)/a)
+(-c + x)**2/a
+(a*x + a)/c
+b + x**2/a**2
+c**2*x**2 - c
+b**2*log(x)
+(-b + log(x))/a
+(b + x)/c
+-a - sin(c - x)
+log(c**2*x**2)
+sqrt(log(x))
+c*x + 2*c
+-a + (c + x)/b
+log(c*x + c)
+cos(b + log(x))
+a*b*x + c
+(-a + sqrt(x))/c
+(c + x/c)/b
+(-a + sin(x))/a
+b + cos(b*x)
+sin(a + x**2)
+(-a + x/b)/a
+cos(sqrt(c + x))
+x**4/c
+c*(-b + x)/b
+(c + x)**(1/4)
+-a + (-c + x)/c
+a + c*(-a + x)
+-b + cos(a*x)
+-b + cos(x)/b
+a + log(-a + x)
+sin(cos(c*x))
+-2*c + x/a
+b + (a + x)**2
+a*log(x) + a
+log(-c + x)/b
+sqrt(cos(c - x))
+b*sin(x) - b
+log(sqrt(b + x))
+sin(sqrt(-b + x))
+log((-a + x)**2)
+c**2*(-c + x)
+cos(log(x)/c)
+a*(c + x) - c
+sin(a + x/a)
+b*(-a + sqrt(x))
+x*exp(b)
+b + c**2*x
+a + log(a + x)
+log(c*x)
+-c*sin(c - x)
+b*sin(sqrt(x))
+-a - b + sqrt(x)
+cos(x/a)
+a + log(sqrt(x))
+-2*a + b + x
+cos(c - x/c)
+cos(a - sin(x))
+sqrt(a*x + c)
+sin(b**2*x**2)
+cos(log(x)/a)
+-b + cos(c + x)
+a + c + sin(x)
+log(a + x)**2
+-c + log(b + x)
+(b*x + b)**2
+cos(sin(b*x))
+b*(-a + x/b)
+sin(-a + c + x)
+sqrt((c + x)/c)
+a*x/c**2
+-c + x/c**2
+-c + sqrt(a + x)
+a*(b + x)**2
+-c + log(c + x)
+b + log(x**2)
+(-b + x)**2/b**2
+b*cos(x/c)
+a*sin(a + x)
+c + log(a*x)
+-b + x**2/c**2
+a + log(x)/b
+b*sin(x) + b
+-a + (c + x)**2
+log(sin(x))**2
+cos(cos(sqrt(x)))
+a*(-b + x/b)
+b**2*sin(x)
+cos(sqrt(x/a))
+c + log(-b + x)
+a + cos(x/b)
+b**2*x + b
+c*(2*c + x)
+x**2/a
+c*(-a + cos(x))
+log(2*a + x)
+(c + x/a)/a
+-a + sin(x)
+b*log(log(x))
+a*(b + x)/c
+cos(x**2/c)
+c + (c + x)/a
+a + cos(b + x)
+sqrt(cos(cos(x)))
+b + log(x)
+-b + 2*c + x
+b*cos(b + x)
+sin(b*(-a + x))
+b*(a + x)/c
+log(sin(a + x))
+(b + x/c)/a
+b*sin(sin(x))
+(c*x - c)/c
+a*(b + x) + c
+log(b*sqrt(x))
+-a - b + sin(x)
+cos(b - sqrt(x))
+cos(c + cos(x))
+c*cos(x/b)
+(-b + cos(x))/b
+cos(b*log(x))
+a*(a + x) - b
+cos(a + x)/a
+(2*c + x)/a
+b*(-a + x)**2
+c*(a*x - c)
+c + log(-a + x)
+c*(a + c*x)
+b*x**2 - b
+b*sqrt(x**2)
+(a + cos(x))/c
+log(a*b*x)
+a*x - b
+a**2*b*x**2
+-b - 2*c + x
+(a + sin(x))**2
+-a + c*(a + x)
+b*c*x - b
+c + sin(sin(x))
+c*cos(a*x)
+-b + c + x**2
+a*x/b - b
+x**2/a**2
+log(cos(x)**2)
+cos(a - b*x)
+-b + x**2
+log(b**2*x)
+cos((b + x)/b)
+-a + b*(-c + x)
+c*(-a + log(x))
+(b*x + c)/b
+a + x**2/a**2
+(-a + cos(x))**2
+(-c + x)**(1/4)
+-sin(a - x**2)
+(a + b + x)/a
+sin(x)/(a*b)
+-a + sin(x/a)
+a - b + x/a
+-sin(c - sin(x))
+(-a + b*x)**2
+log(b*x/c)
+-c + log(a*x)
+log((b + x)/c)
+(a - c + x)/c
+sin(log(x)**2)
+c*(a + x/a)
+c*(2*a + x)
+b*(a*x - c)
+c*(-b + sin(x))
+log(a*x)/c
+sin(sin(sqrt(x)))
+-sin(sin(c - x))
+log(sin(sin(x)))
+log(sin(b*x))
+(a + x)**2/c
+-a + cos(c*x)
+c**2*sin(x)**2
+b + c*cos(x)
+sqrt(-b + x)/c
+log(x)/a**2
+x*exp(-a)
+(b + x)**(1/4)
+(a + b + x)/c
+-b + cos(log(x))
+a + log(c + x)
+sqrt(cos(b - x))
+-a + sin(x**2)
+(b - c + x)**2
+(b + c*x)/c
+b**2*x**2/c**2
+b*log(x/c)
+log(b + x)**2
+log(log(x)/b)
+c*cos(c*x)
+a*(-c + x)/c
+sin(a + x)/b
+c + cos(b*x)
+a*sin(x**2)
+(a + x)**4
+(b + x)**4
+log(sin(x))
+cos(c - sin(x))
+sin(x/b)/c
+cos(b*x)
+a**2*x + b
+b + log(x)/b
+-b + (c + x)**2
+cos(b - x/c)
+sqrt(x/c)
+(-a + cos(x))/a
+log(c + x)
+b*(a + x)
+a*(2*c + x)
+-c + x**4
+c*(-b + x)
+b*sqrt(a*x)
+(-a + log(x))/c
+b + log(c*x)
+log(b*x**2)
+(c + x/b)**2
+-b + (a + x)/b
+cos(a*x**2)
+sin((-b + x)/c)
+a + c*x
+-c*sin(b - x)
+a*(-a + x)
+b*(-c + x/a)
+-a + c*(-b + x)
+c*x - 2*c
+-a + b*(-a + x)
+cos((-a + x)/a)
+3*b + x
+log(x/(b*c))
+cos(sqrt(log(x)))
+cos(sin(sqrt(x)))
+c*(a*x + a)
+-b + x**(1/4)
+sin(cos(log(x)))
+cos(c + x/c)
+c + log(x)/c
+-b + (a + x)/a
+x*exp(a)
+a*sqrt(x/a)
+a**2*cos(x)
+a + log(-b + x)
+-sin(a - x/b)
+a - b + x
+c + x**2/a**2
+a*(-c + x**2)
+cos(cos(x)**2)
+cos(a*x + a)
+b*(a + x**2)
+-a - sin(a - x)
+sqrt(a + x**2)
+a*(a*x + a)
+-b + sin(x)
+a*sin(x/b)
+log(log(x))/b
+a*c*(c + x)
+-a + cos(cos(x))
+sin(a*x + b)
+c*(-b + x) + c
+sqrt(-a + sqrt(x))
+a*(b + cos(x))
+sin(sqrt(x)/c)
+sin(b + x)**2
+a**2*(-a + x)**2
+a*(-2*b + x)
+(-a + x/a)/a
+cos((b + x)/a)
+(-a + x/b)/b
+-a + sqrt(-a + x)
+log(a + cos(x))
+c*(-c + sin(x))
+b + sin(c + x)
+b*x**4
+(-a + c + x)**2
+b*x**2 + c
+cos(b + cos(x))
+-b - c + x
+b + (b + x)/c
+b**2*x
+-sin(c - cos(x))
+c*log(x)/a
+cos(cos(x))**2
+a*c*(-a + x)
+c + log(x/b)
+sin(b*x + b)
+-a + sin(x)/a
+c*log(x)/b
+c + (a + x)**2
+x**(1/4)
+-b + log(b + x)
+-c + x**2/a**2
+a*(-b + x/c)
+a*sin(b + x)
+b*log(x) + b
+sin(log(b + x))
+log(b + x)/a
+c*sin(sin(x))
+a*(-b + x) - b
+a*b*cos(x)
+-a + cos(a*x)
+b + (c + x)/b
+sin(cos(b - x))
+sqrt((-b + x)/c)
+a*log(a*x)
+sin(log(-a + x))
+a*c*x - c
+sqrt(log(x)/a)
+log(log(x/b))
+c*(-a + x)/a
+a*b*x - c
+b + 2*c + x
+c**2*(-a + x)**2
+a*c*(-c + x)
+sqrt(a + b*x)
+log(-a - b + x)
+a*(a + x)/b
+cos(b*x - c)
+a*(a + x/a)
+sqrt((a + x)/c)
+a + sin(c*x)
+-b + x/(a*b)
+cos(log(x))/c
+a*log(x/b)
+b + log(a + x)
+b + cos(x)**2
+sqrt(b + x/c)
+log(sqrt(x)/c)
+b*(-a + x) + c
+(-b + x)/(a*b)
+b*(c + x)/a
+(-c + x)**2/b
+c + sin(x/c)
+a*sqrt(cos(x))
+-a + sqrt(x)/a
+b*x**2 + b
+-c + x/(a*b)
+-2*a + cos(x)
+(-a - c + x)/c
+c + cos(a*x)
+-b + x**2/b**2
+-b + c + cos(x)
+(-b + log(x))/c
+(b*x - b)/a
+c + cos(sqrt(x))
+b*cos(a*x)
+sqrt(log(a*x))
+log(x)/(a*b)
+(b + c*x)/b
+b*(c + sin(x))
+cos(x)**2/c**2
+a + sin(x)/c
+a + b + log(x)
+a + sin(x/c)
+log(x**2/a**2)
+sin(cos(x)/b)
+a + x/(a*c)
+cos(sin(c*x))
+b*(a*x - b)
+(b + x)**2/a**2
+sqrt(c*x + c)
+b**4*x**4
+a + b + x
+cos((c + x)/a)
+sqrt(a*x)
+b + sin(x)/c
+-a + sin(x)**2
+c*sin(cos(x))
+sin(x)**2/a**2
+sqrt(x/a)/b
+log(c*(b + x))
+sin(a*sin(x))
+c**2*x/b
+a*(c*x + c)
+log(a - b + x)
+-a + b + x
+sin(c + x)
+a + sin(x/a)
+a*sin(x) + b
+b*sin(log(x))
+a**2*sqrt(x)
+log(sin(c + x))
+log(cos(c*x))
+-a + sin(log(x))
+(2*b + x)/c
+a**2*x**4
+b*log(sin(x))
+sin(x)/a
+(-b - c + x)/c
+-a + cos(b + x)
+sin(sin(a + x))
+-a + (-b + x)/b
+sin(log(x))/c
+a*c*sin(x)
+log(log(x))
+c*(a + x/c)
+b + x/c**2
+-a + c + x/c
+sqrt(a*(a + x))
+c + sin(cos(x))
+(-b + c*x)/c
+cos(x/b)/a
+-c - sin(c - x)
+log(x/a)**2
+cos(x/a)/a
+sqrt(x/b)/b
+log(cos(x))
+a + sin(cos(x))
+log(sqrt(x))**2
+a*(-c + x) + b
+b*log(a*x)
+log(log(x))/c
+a*c*x - b
+b + log(x)/a
+x/(a*c**2)
+(-c + x/b)**2
+b + sin(a*x)
+a + c*x/b
+a + (-a + x)**2
+cos(b + c + x)
+log(a*log(x))
+b + sin(cos(x))
+b*(-b + x) - c
+a*x/c - b
+sqrt(-c + x/b)
+c*sin(x) - c
+b + cos(x)/b
+sin(b*x)
+sin(a*x)/b
+-a + (-c + x)/a
+x**(1/4)/a
+a*x/b
+sqrt(x)/c
+cos(b - x)/c
+sqrt((-c + x)/a)
+sin(c + x/c)
+a*sin(x)
+b + (c + x)/c
+log(b + x/b)
+(c + x)**2
+c + log(x)/a
+-c + log(b*x)
+c + (b + x)**2
+-c + sin(x)/b
+a**2*c*x
+-a + c*x**2
+-2*c + x/c
+(-b + x)/b**2
+c*x
+(c + x/a)**2
+a*log(-c + x)
+-a + sqrt(log(x))
+(b + x/b)/c
+log(a*x)/b
+-b + sqrt(-c + x)
+sqrt(-b + c*x)
+cos(b**2*x**2)
+cos(x)**2/a**2
+(-a + b*x)/b
+c + log(b + x)
+-b + sin(x)**2
+cos(a + c*x)
+a - b + x/c
+a + (b + x)/b
+cos((-b + x)/b)
+(-a + x)**(1/4)
+sin(a + cos(x))
+b*cos(x) + c
+c*log(c + x)
+log(sqrt(-c + x))
+(a*x + c)**2
+a*(c + cos(x))
+log((c + x)/c)
+c**2*x**2
+-c + sin(x/a)
+a*(c + x) + a
+(b*x + b)/c
+b**2*(-c + x)**2
+a*(a + x)
+log(x)/a
+a**2*x**2 - c
+a*cos(b - x)
+b**2*(c + x)**2
+b*x - b
+a*(-a + x**2)
+sin(x)/(b*c)
+b*sqrt(cos(x))
+-c + sqrt(x)/b
+b + (-a + x)/b
+c*sin(x)**2
+sqrt(a*(-a + x))
+sqrt(a*cos(x))
+c*log(a + x)
+cos(c + log(x))
+(b*x - c)/a
+a*x + 2*b
+b*cos(x**2)
+log(b*(b + x))
+sqrt(a*x - b)
+-sin(a - b*x)
+cos(b + x/b)
+a*(a + cos(x))
+b*(b + cos(x))
+cos(log(x))/a
+cos(a + c + x)
+a*(-a + x)**2
+cos(sqrt(c*x))
+a + sin(sqrt(x))
+(-a + x**2)/b
+sqrt(b + x/a)
+sqrt(-b + x)/a
+log(b - c + x)
+b*(a + x/b)
+b*sqrt(b + x)
+-b + sin(sin(x))
+b*x/(a*c)
+a*x
+(-c + x/b)/a
+c + sin(x)/c
+sin(b + c*x)
+(-a + c*x)**2
+a*(-a + x/c)
+-a + b + x/a
+(-b + x)**(1/4)
+-b + log(-c + x)
+sqrt((a + x)/a)
+cos(a + x**2)
+(-b + sqrt(x))/a
+(-c + x/c)/a
+c*(b + x)**2
+(-b + x)/a**2
+sqrt(x**2/a**2)
+c + cos(c*x)
+(b + x/a)**2
+b - sin(a - x)
+(a + x**2)/a
+-a + b*x - b
+(-a + x/c)/c
+sqrt(a*x - a)
+-sin(sin(b - x))
+a**2*(b + x)**2
+b*sin(c + x)
+-c + x
+a*(b + sin(x))
+c + x**2/a
+(-b + x)**2/b
+-a + c*x
+sqrt(a*x - c)
+x/b**3
+-sin(c - x**2)
+cos((b + x)**2)
+log(c*x - c)
+a*x**2
+log(b + x)/b
+a + b*(a + x)
+-b + x/(b*c)
+a*x - 2*c
+sin(c*(b + x))
+b + x**2/c
+c + cos(x)/c
+(-b + x/c)/c
+log(a*x)
+a*x**2 - b
+-a + b*x - c
+(a + x)**(1/4)
+cos(c - cos(x))
+-a + (a + x)/b
+c + x/c
+-a - sin(b - x)
+-a + log(a + x)
+log(sin(x/c))
+(b + cos(x))/a
+cos(x)/c
+log(a*(-a + x))
+sqrt((b + x)/c)
+a*cos(c + x)
+(-a - b + x)**2
+-a + x/b**2
+(b*x - b)/c
+(b*x + c)/c
+cos(x)**2/b
+-2*a - c + x
+-c + log(x)/a
+cos(sqrt(x))/c
+cos(x)/c**2
+log(x)/c**2
+c + cos(x)
+a*(-c + x/c)
+-sin(a - c*x)
+(c + x/c)**2
+(-a + sqrt(x))/a
+sin(b - x)**2
+-a + sin(b + x)
+sin(c*x)/b
+log(-c + sqrt(x))
+cos(x/b)/c
+sin(c + x)/c
+c + cos(b - x)
+sin(b*x)/c
+a*(-b + x) + b
+cos(x)**(1/4)
+b**2*x**2
+log(b + c*x)
+(-c + x/a)/c
+b*c*x**2
+sin(sin(x)/c)
+b*sqrt(c*x)
+b + cos(x**2)
+(-c + cos(x))/a
+-b + sqrt(x/b)
+sqrt(a*(c + x))
+sin((-a + x)/a)
+(a + x/a)/c
+sin(x)
+c*(c + cos(x))
+log(sqrt(b*x))
+log(log(sqrt(x)))
+sqrt(b*(-c + x))
+(-2*b + x)**2
+a - b + c + x
+log(x/a**2)
+a**2*b*x
+cos(x**2)/b
+c*(c + x)/b
+a + (-a + x)/a
+a*cos(x/b)
+log(b*x - c)
+log(a*sqrt(x))
+-b + x**2/a
+c + sin(x)/a
+cos(b + sin(x))
+log(c + x/c)
+sin(x/(a*c))
+log(cos(x/c))
+c*(-c + x**2)
+log(a*cos(x))
+(c*x)**(1/4)
+-b + cos(x)/a
+a*log(x) - b
+(a + x)/(a*c)
+c*sqrt(a*x)
+log((a + x)/c)
+a + c + cos(x)
+a*sin(x) + a
+a**2*(b + x)
+b*x**2 - c
+(c + x)**2/c
+c*cos(x**2)
+a*b*x
+3*a + x
+cos(b*(-c + x))
+log(x)**2/c
+(-b + x)**2/a**2
+log(cos(b - x))
+sin(sqrt(x))
+2*a + x/b
+b*(a + c + x)
+sin(sin(b*x))
+a*cos(x)**2
+-a + sin(b*x)
+sqrt(sin(b*x))
+-b + c + x/c
+sqrt(log(x/c))
+sqrt(a*b*x)
+a + cos(sin(x))
+b - c + sin(x)
+sin(c - x)**2
+b - c + x/a
+c*(-c + x/c)
+cos(a - b + x)
+-a + sin(a*x)
+b**2*x**2 - c
+log(cos(sqrt(x)))
+sin(sin(b + x))
+(c*x + c)**2
+b*(-b + x/b)
+-a + log(x)**2
+b*(c + log(x))
+sqrt(sin(x))/c
+-a + sqrt(x)/b
+a*cos(cos(x))
+cos(2*b - x)
+b*(-c + x)
+a + x/c
+(b*x - c)**2
+b*(2*a + x)
+-c + cos(b*x)
+sin(x/b)**2
+c*(a - b + x)
+b*(b + x**2)
+sqrt(c*(-b + x))
+cos(b - x)**2
+b*(-b + cos(x))
+a + (a + x)/b
+log(log(-a + x))
+a*(-b + x) + a
+b*(-a + log(x))
+(c + x)**2/b
+log(cos(c + x))
+cos(x**(1/4))
+sqrt(-a + c + x)
+-a + sin(sqrt(x))
+a + b*x/a
+c + x**2/c
+(b - c + x)/b
+-b + (b + x)/a
+log(cos(x))**2
+cos(log(sin(x)))
+cos((-a + x)/b)
+cos(log(x/a))
+b*(-c + x) + c
+b*(-b + x) - b
+b*(-a + x**2)
+cos(c - x**2)
+cos(sqrt(-b + x))
+sin(b*x)/a
+sqrt(b + x**2)
+c*(-a + b*x)
+-c + cos(sqrt(x))
+-c + cos(sin(x))
+log(log(x))/a
+b*sqrt(x) - b
+(-a + b + x)/a
+sin(a*x + c)
+-2*a + x
+c*sin(c + x)
+a + x/a
+c + cos(x/b)
+a + sin(x/b)
+sin(a*x)/a
+sin(sqrt(sin(x)))
+cos((-c + x)/a)
+-2*c + cos(x)
+log(c*x/a)
+sin(sin(log(x)))
+a - c + x/b
+c + (a + x)/a
+-a + cos(sqrt(x))
+-a - b + x**2
+b*c*(c + x)
+b**2*x - b
+sqrt(c*(-c + x))
+(a + x/c)/c
+sin(log(x))/b
+(-c + cos(x))/b
+(b + x/c)/c
+a - c + cos(x)
+c + x/(a*c)
+-c + cos(c - x)
+sin(c*sin(x))
+(b + log(x))/c
+sqrt(-b + sin(x))
+-a + cos(x**2)
+log(x)**4
+sqrt(x/c)/a
+(-b + x)**2/c**2
+c*(a*x + b)
+b*sin(x)**2
+sqrt(-a + sin(x))
+b**2*c*x
+x**4/c**4
+b + log(b + x)
+cos(sqrt(x)/c)
+x**2/(a**2*b**2)
+-a + sqrt(x/b)
+cos(a*x/c)
+-c + (-c + x)/b
+cos(b*x/c)
+-b + log(x/a)
+-a + x**(1/4)
+c + sin(x/a)
+b*c**2*x**2
+sqrt(c*x/b)
+b*(a + x) - b
+(a*x + b)/c
+sin(x/c)**2
+sqrt(sin(sqrt(x)))
+log(b*log(x))
+sqrt(c + x)/a
+a + b*x
+sin(a*x + a)
+-b + c*(c + x)
+sqrt(log(x)/c)
+-b + sqrt(c*x)
+sqrt(sin(log(x)))
+sin(cos(x)/a)
+(b + log(x))/b
+cos((-c + x)**2)
+c*(-b + cos(x))
+b*x/c + c
+a*x/c
+sin(c*x/b)
+sin(sin(x)/b)
+b + (-c + x)/b
+-a + sqrt(x**2)
+log(-c + sin(x))
+log(log(c*x))
+a - b + x/b
+-a - b + c*x
+(c*x + c)/b
+a + sin(a*x)
+a*(a + c + x)
+-a + x/c**2
+a*sqrt(-c + x)
+(-b + x/a)**2
+-b + sqrt(x)/c
+cos(x)**2
+a*(-a - b + x)
+(-b + x/a)/a
+-a + (-a + x)/c
+log(-sin(a - x))
+sqrt(sin(x)**2)
+cos(a + x/b)
+(b + x/b)**2
+c*sqrt(c*x)
+sqrt(a*x)/a
+c + x/b
+log(-b + c + x)
+b**2*cos(x)**2
+log(c*x)/c
+sin(x/b)
+a*cos(x) + b
+-2*c + sqrt(x)
+-sin(b - log(x))
+sin(sqrt(x)/b)
+-a - 2*b + x
+b + (a + x)/c
+b*cos(x)
+sqrt(log(c*x))
+a*(b*x - b)
+c*x**2/b
+a*(2*a + x)
+-a + sin(x)/c
+cos(cos(x)/c)
+sqrt(-a + x)/a
+a + log(x/b)
+-a + sin(x)/b
+b - sin(b - x)
+sqrt(sin(cos(x)))
+(c + cos(x))**2
+cos(c - sqrt(x))
+a*(b + x) + a
+a*c*(a + x)
+sin((-a + x)/c)
+sin(sin(x))/c
+sqrt(log(x))/a
+log((-a + x)/a)
+log(sin(a*x))
+a*sqrt(x) - a
+c*(b + x)/a
+-c + cos(x)/a
+-a + (b + x)**2
+-c + x**2
+b*(2*c + x)
+cos((a + x)/b)
+cos(-b + c + x)
+-sin(2*c - x)
+c + (b + x)/b
+cos(b*c*x)
+cos(2*a - x)
+a*c*(b + x)
+b*(c + x/a)
+-a + a*x/c
+sqrt(-c + x)/b
+(-a + x)/a
+(-b + c + x)**2
+log(b + x/c)
+sin((-b + x)/a)
+a**2*x**2/b
+x/(b**2*c)
+(-a - b + x)/a
+(a*x - b)**2
+a*sin(sqrt(x))
+a + cos(x)/c
+-2*a + log(x)
+b + c*(c + x)
+sqrt(a*x)/c
+-a + x**2
+b*log(b*x)
+a + log(cos(x))
+a*sqrt(x) - b
+log(log(-b + x))
+b*(-b + x/a)
+log(b + log(x))
+(a - b + x)/a
+cos(a - cos(x))
+(c + x)/c**2
+x**2/c
+cos(a - x/a)
+(c*x - c)/a
+a*(a + x) + b
+(b + log(x))/a
+(a - b + x)**2
+sin(log(-c + x))
+log(a*sin(x))
+-a + log(cos(x))
+sin(a*x/b)
+c + cos(sin(x))
+-sin(c - x/c)
+c + (-a + x)/a
+sqrt(b + sin(x))
+cos(sqrt(cos(x)))
+sqrt(c + x/b)
+cos(a*x - a)
+-sin(c - x)/b
+a + (b + x)/a
+log(b*(-c + x))
+c**3*x
+sqrt(cos(x/c))
+(-c + x)/b**2
+c + log(sqrt(x))
+log(sqrt(c*x))
+c + cos(x)/b
+log(c*x/b)
+(-2*b + x)/a
+cos(b*(-b + x))
+(c + log(x))**2
+c*sin(a + x)
+(-b + c*x)/b
+(-c + sqrt(x))/a
+-b + cos(sqrt(x))
+c*(-b + x/b)
+log(-c + x**2)
+-b*sin(a - x)
+sqrt(log(a + x))
+a*(-b + c*x)
+c + (-b + x)/c
+-sin(b - x/c)
+sin(c + x/a)
+-a + c*sin(x)
+-sin(c - sqrt(x))
+a + log(b + x)
+log(c + sin(x))
+a*(a + log(x))
+a*cos(x) - c
+cos(log(x/c))
+b*log(-b + x)
+b + log(x/c)
+c + sin(b*x)
+(a*x + a)/b
+a*sqrt(a + x)
+b*log(c*x)
+-sin(c - x/a)
+log(sqrt(sin(x)))
+c + b*x/a
+cos(b - c + x)
+sin(cos(a - x))
+cos(a*x)/c
+log(log(a + x))
+b*sin(a*x)
+sqrt(x/c**2)
+(-a + x)/(a*c)
+-b*sin(c - x)
+sqrt(log(x)**2)
+b**2*x - c
+(-b - c + x)/a
+-b + c*(a + x)
+(a + b*x)/a
+log(cos(log(x)))
+-c + cos(b - x)
+-b + sin(log(x))
+sin(c + x**2)
+sin(log(c + x))
+(c*x - c)**2
+-b + x/b**2
+-2*a + sin(x)
+a*c*(-b + x)
+sqrt(b*(b + x))
+a - sin(a - x)
+sin(c*x)/c
+b*(c + cos(x))
+-a*sin(b - x)
+c*(2*b + x)
+(-b + x/c)/a
+c*(b + sin(x))
+-a + c + cos(x)
+b*sin(x)
+b*log(x) - c
+-2*a + c + x
+a*x - 2*b
+sqrt(x/b**2)
+(-a + x)/(a*b)
+-b + cos(b + x)
+sqrt(x/(a*b))
+-b + cos(c*x)
+sin((-c + x)/b)
+x/(a**2*c)
+b + cos(b - x)
+b - c + x**2
+-c + log(a + x)
+-a + x/c
+-a + sqrt(-b + x)
+b*log(c + x)
+a*log(sqrt(x))
+log(c + x)/b
+a*(-a + cos(x))
+b + cos(sqrt(x))
+sin(a*x - a)
+log(-c + log(x))
+a*log(b + x)
+c*cos(log(x))
+a + c*log(x)
+log(2*b + x)
+b**2*log(x)**2
+log(a + x/b)
+a*sin(x)/c
+sqrt(b + c + x)
+log((-b + x)/c)
+c**4*x**2
+sin(x)/b**2
+log(b + x)/c
+c*(-c + x)
+-b + c + sqrt(x)
+-b + sin(x/b)
+(-b + x)/b
+log(a*x - b)
+log(x/c)/a
+sqrt((-a + x)/c)
+a*log(x)**2
+cos(a + sin(x))
+c*cos(x)/b
+c*sqrt(x/b)
+sqrt(log(-b + x))
+(-b + c + x)/c
+b*x**2/a**2
+-c + sqrt(x)/a
+(b*x + c)**2
+a*x/b + b
+sin(cos(b + x))
+c*(b + x**2)
+a*(-c + x) - b
+-a + c + sin(x)
+sin(a + x)
+(a + c + x)/b
+-b + x**2/a**2
+-a + b*cos(x)
+sin(a + x)/c
+log(-a + x/c)
+c*log(-b + x)
+sin(log(sin(x)))
+sin(cos(x/b))
+c + cos(a - x)
+-b + c*log(x)
+-a - b + cos(x)
+sqrt(sin(c + x))
+a*(-a - c + x)
+sin(log(x))
+c*sqrt(x) - c
+c + cos(log(x))
+cos(b - x)
+c*sqrt(x/c)
+log((c + x)/b)
+(-c + x/c)/c
+a*x**2 - a
+(a + b + x)/b
+c + (c + x)**2
+log(-c + x/b)
+log(a*x)/a
+-b - c + x/a
+b*log(a + x)
+-a - c + sin(x)
+c*cos(x/a)
+(-b + sqrt(x))/c
+a*sqrt(x) - c
+log(log(x))**2
+sqrt(a + sin(x))
+c*sqrt(cos(x))
+log(b*cos(x))
+log(sqrt(x/c))
+sqrt(sin(x))/a
+sqrt(sin(x))/b
+log(cos(x))/c
+b*x**2/c
+sqrt((-b + x)/b)
+a*(-a + b*x)
+-2*b + sqrt(x)
+a + log(x)
+c**2*(b + x)**2
+b*(b + x)/c
+sin(b*x**2)
+(-a + x)/c
+a*sin(x)/b
+-c + sin(a + x)
+log(-c + x/a)
+-sin(a - x)/c
+(a*x + c)/a
+log(cos(x/a))
+cos(a - x)/b
+-c + sqrt(b*x)
+a*c*log(x)
+cos(x)**2/c
+a + log(b*x)
+2*c + x
+b**2*x**2 + b
+x/(b*c)
+(-c + x/c)/b
+c*x**2 + c
+2*a + log(x)
+(c + x)/a
+-a + cos(b - x)
+log(x**2)/a
+log(b + c + x)
+-b + sin(x)/a
+(a + log(x))/c
+c*x/b
+cos(x/c)/b
+sin(c + sin(x))
+sin(a*sqrt(x))
+log(sin(sqrt(x)))
+-c + cos(x/a)
+a*log(sin(x))
+log((c + x)/a)
+sqrt(-2*a + x)
+-sin(a - log(x))
+-a + b + c*x
+c*(-2*b + x)
+cos(sin(x)/a)
+a + cos(b*x)
+b*(c + x) - c
+(-a + x**2)**2
+(a + c*x)/a
+(a + b*x)/b
+log(log(sin(x)))
+sin(cos(sqrt(x)))
+(-b + x/a)/b
+a*c*x - a
+c*(a*x - b)
+log(x)/b**2
+cos(x)
+a*(2*b + x)
+b*x + b - c
+sin(sin(cos(x)))
+-a + log(x/c)
+log(c*x)/a
+a*cos(x/a)
+log(x)**2/b
+a*c*cos(x)
+log(c*x)**2
+b*(-b + x**2)
+-c - sin(a - x)
+-c + sqrt(c + x)
+sin(x)**2/c
+-a + log(x)/c
+log(cos(x)/b)
+(-b + x**2)/b
+b*c**2*x
+sin(b*(-b + x))
+c*x**2
+a*cos(c - x)
+-b + cos(a + x)
+-c + sqrt(log(x))
+-a + c*log(x)
+b*(-b + x) + b
+a + log(x/a)
+b - sin(c - x)
+(b*x + b)/b
+-a + log(x/a)
+sin((a + x)/c)
+(a + c + x)/c
+a*cos(a*x)
+(b*x + c)/a
+b + x**2
+c + cos(a + x)
+sqrt(x)/b
+a*(-a + sqrt(x))
+sin(sqrt(-c + x))
+c*(-c + x/a)
+-2*a + x/a
+b*(a + sin(x))
+sqrt(-b + cos(x))
+a*sqrt(x)/b
+a + log(x**2)
+cos(cos(x))
+-b + x/a**2
+-sin(b - sqrt(x))
+b**2*x**2/c
+(-a + sin(x))/b
+b + cos(log(x))
+b + cos(a*x)
+(b + sin(x))**2
+a - b + cos(x)
+log(c + x)/a
+log(-c + cos(x))
+cos(b - x/b)
+a*log(x) - a
+x/(b*c**2)
+b*c*sqrt(x)
+-c + sqrt(-b + x)
+-a - b + x
+cos(2*a + x)
+-a + log(-a + x)
+sqrt(sin(x)/b)
+b + (-c + x)**2
+sqrt(-sin(a - x))
+c*sqrt(x)/a
+sqrt(b*cos(x))
+cos(c*x)
+b*sin(x/b)
+sqrt(b + x)/b
+-c + sqrt(x/c)
+sin(c + x)/b
+b**4*x**2
+b + cos(x/a)
+log(cos(c - x))
+cos(a - log(x))
+cos(a - x/c)
+x/(a*b)
+sqrt(c*x/a)
+c**2*(a + x)
+c + log(x/a)
+a + cos(x)/a
+b + sin(b + x)
+cos(b + x**2)
+c + cos(x)/a
+log(sqrt(x/a))
+(c + x/c)/c
+b*c*x/a
+sin(a + x/c)
+a*cos(x**2)
+(-a + x/a)**2
+(-a + c*x)/a
+a*(-a + c + x)
+log(x**(1/4))
+(-b + x)/c
+a*(-a + x) + c
+a**2*(a + x)**2
+sqrt((-a + x)/b)
+a*(-c + x) + a
+-a + sqrt(x/a)
+sin(x**2/c**2)
+a + x
+log(-a + x)/c
+-b + (-b + x)/a
+b + c*(b + x)
+sqrt(a + x)/c
+-a + b + x**2
+cos(a*(b + x))
+-b + log(-b + x)
+-a + sin(x/b)
+log(x)**2/c**2
+c*log(a*x)
+sin(x)**2
+sin(a*x - c)
+log(sqrt(x/b))
+log((-a + x)/c)
+log(sin(x))/b
+-a + x**2/c
+sin(a*(b + x))
+c*cos(x)**2
+a*b*(c + x)
+2*a + sin(x)
+cos(x**2)**2
+b*x**2/c**2
+c*log(c*x)
+b + (-b + x)**2
+-a - 2*c + x
+-a + b + sin(x)
+a + c**2*x**2
+b*sqrt(-c + x)
+x/a**2
+b + x**2/b**2
+-c + sqrt(x**2)
+cos(a**2*x)
+-c + b*x/a
+b + sin(a + x)
+sin(log(x))**2
+c*log(sqrt(x))
+cos(x/a)/b
+cos(c*x - c)
+a*x**4
+(-a + c*x)/b
+cos(b + x)/b
+c*sqrt(log(x))
+a - c + x
+c*(-a + sin(x))
+cos(log(x)/b)
+(c + x)**2/a**2
+b + log(cos(x))
+a + b*(c + x)
+cos(a + cos(x))
+cos(a + c - x)
+a*log(x)
+c*log(x/c)
+c*(c + x/c)
+cos(x/a)/c
+-a + (b + x)/b
+a + sin(b*x)
+cos(sin(x))/a
+-c + cos(c*x)
+a**2*sin(x)
+b + (b + x)/b
+a + b - c + x
+2*a - b + x
+b + (c + x)/a
+c + sin(log(x))
+cos(c - x)**2
+sqrt(cos(log(x)))
+c*(b*x - b)
+a*(-b + x**2)
+(-a - c + x)**2
+sqrt(sqrt(x)/a)
+a*b*x**2
+-a + x
+sqrt(b - c + x)
+(a + sin(x))/b
+-a + sqrt(x)
+log(sqrt(a + x))
+(-a + x)**2
+-a + (-a + x)/b
+cos(sqrt(-c + x))
+sin(x/(b*c))
+sin(a*(-b + x))
+sqrt(-c + x**2)
+sqrt(a + c*x)
+cos(b + x)**2
+(a + x)**2/b
+-c + log(x)/c
+-b + sin(b + x)
+-c + cos(a + x)
+a + b*c*x
+b**2*x/c
+log(a*c*x)
+b*sqrt(b*x)
+cos(x/(a*b))
+cos(x/a**2)
+a*sqrt(c + x)
+a*(a + x)/c
+a*x/(b*c)
+sin(sqrt(x)/a)
+(a + x/c)**2
+a + (c + x)/c
+-b + cos(c - x)
+-b + c*sin(x)
+-sin(2*b - x)
+log(-a + x/b)
+a**2*x - c
+-b + sqrt(sin(x))
+log(a + b*x)
+sin(b + sin(x))
+-b + log(c*x)
+cos(log(c + x))
+cos(a*x/b)
+-c + sin(c + x)
+(-a + c*x)/c
+(b + x)**2/b
+log(log(x)/a)
+sin(x/a**2)
+a**2*x**2/c
+sin(a*(-c + x))
+sqrt(-b + x**2)
+c*(a + x) + c
+3*c + x
+c*cos(sqrt(x))
+log((b + x)**2)
+log(-2*c + x)
+log(c + x)/c
+a*(b*x - c)
+cos(a - x/b)
+(-b + x)**4
+sqrt(a*x + a)
+c + cos(x/c)
+(c*x + c)/c
+-a + x/(a*c)
+-a + b*log(x)
+(-c + x/b)/b
+a*(-c + x) - c
+(b + x)/c**2
+2*a + b + x
+sqrt(sin(b + x))
+(-a + sqrt(x))**2
+sin((a + x)**2)
+-a + x**2/a
+-b - c + x/c
+a + sin(x)/a
+a + b*x + c
+sqrt(x**2/c**2)
+sin((-a + x)/b)
+a**2*x**2 + c
+(a + x/a)/a
+a + sin(x)
+b*(-c + x/c)
+log(sin(x))/a
+b*cos(x) - c
+cos(a - sqrt(x))
+b*(-b + c*x)
+-2*b + c*x
+log(log(-c + x))
+(-b + x)/(a*c)
+cos(a*x)**2
+log(c*log(x))
+c*(-a + c + x)
+a + sin(x)/b
+log(cos(a + x))
+a + (c + x)/b
+log(b + cos(x))
+b*(-a + x)/c
+(b + c + x)/a
+-a - c + x
+sin(b + x/c)
+sqrt(c*x)/c
+-c + cos(c + x)
+b**2*(b + x)
+sin(log(x)/a)
+(c + x**2)/c
+cos(x/a)**2
+a**2*x/b
+-a + (-a + x)/a
+c**2*x**2/a
+c*cos(x/c)
+2*b + c + x
+-a + x**2/a**2
+-a + sqrt(b + x)
+-c + sin(x**2)
+b*sqrt(x)/c
+a**2*(-b + x)
+x**2/(b*c)
+(a + x)/a
+a*log(cos(x))
+sin(c*sqrt(x))
+a*b*(a + x)
+c*sqrt(-b + x)
+a**2*x + c
+sqrt(b*(c + x))
+c**2*x - c
+-a + 2*b + x
+c*x + c
+cos(x)/a**2
+a**4*x**2
+a*(b + log(x))
+a + b + x/a
+a - b + x**2
+(b + x/c)**2
+sin(log(sqrt(x)))
+(b*x - c)/c
+-a + x/b
+c + log(b*x)
+c*x**(1/4)
+c**2*(-b + x)
+log((-c + x)**2)
+a*c*x/b
+cos(sin(x))
+a + b + c + x
+b*x/c - c
+sqrt(-a + x/b)
+(a*x + b)/b
+c + x/b**2
+-c + sin(cos(x))
+c + x/c**2
+-c + cos(x/b)
+cos(x)/b
+c + sin(x**2)
+b + cos(b + x)
+log(-b + x)/c
+cos(sin(a + x))
+-a + c*(c + x)
+-c + x/b
+a*b*(-c + x)
+a*c*x + c
+(a + x)/b
+sin(sin(a*x))
+c**2*(-a + x)
+sin(x/c)
+sin(x)**(1/4)
+(2*a + x)/c
+a + c + x**2
+a*sqrt(b + x)
+(-c + sin(x))/b
+b**2*x**2/a
+(a*x)**(1/4)
+sin(x)/c**2
+-c + log(-a + x)
+sqrt(b + x)/c
+cos(a*(-b + x))
+c**2*(-b + x)**2
+b*sin(x) + c
+cos(cos(c*x))
+(c + log(x))/c
+(-c + x)**2/b**2
+a + b*x - c
+sqrt(cos(b + x))
+(2*c + x)**2
+b + log(-c + x)
+sqrt(log(x)/b)
+2*c + sin(x)
+a*sin(cos(x))
+log(b*x)**2
+b*cos(x)**2
+(b + x)**2/b**2
+b + cos(c + x)
+a*cos(x/c)
+(-c + sqrt(x))/b
+-2*a + c*x
+b**2*(-b + x)
+c*(c + x**2)
+(b + x**2)/a
+b + cos(cos(x))
+c*(-b + c*x)
+(a*x - b)/b
+c*x - c
+b*(b + c + x)
+-b + sin(x**2)
+sqrt(-a + x**2)
+sin(c + x)**2
+log(a + c + x)
+sqrt(-a + c*x)
+(-a - b + x)/b
+sqrt(c*cos(x))
+b*(b + x)
+sin(sin(x/b))
+log(c**2*x)
+sqrt(x**2/b)
+b + log(sin(x))
+c*(a + b*x)
+c + (-b + x)**2
+sqrt(a*x + b)
+-b + cos(x/b)
+-a + sin(sin(x))
+sin(sqrt(x**2))
+sin(x)**2/c**2
+(a - b + x)/b
+sqrt(-b + c + x)
+cos(sin(x)/c)
+-b + x**2/c
+log(-sin(c - x))
+c**3*x**2
+sqrt(cos(b*x))
+-a + x/(b*c)
+x/(a*b*c)
+-2*a + x/b
+c + cos(x)**2
+cos(b*x)/b
+cos((c + x)**2)
+a + x**2/c**2
+b*x/a**2
+b*(-c + x**2)
+cos(cos(b + x))
+log(a + x**2)
+b + sin(log(x))
+sin(sqrt(log(x)))
+a**2*x/c
+sqrt(b**2*x)
+c*sin(c*x)
+sqrt(a*c*x)
+sin(x/a)/c
+a + log(x)/c
+c*sqrt(x)
+(a + sin(x))/c
+b + c*sin(x)
+(a + x)/c**2
+sqrt(c*x)
+a**2*x - b
+a + b*log(x)
+a + c*cos(x)
+b*log(-c + x)
+a + c + x/a
+sin(b*x/a)
+-c + cos(x)
+b*(-a + sin(x))
+-b + sqrt(x)/a
+-a - b - c + x
+(a + x)**2
+-c + (-c + x)**2
+sqrt((c + x)/a)
+-b + (-b + x)/b
+log(b*sin(x))
+sin(x)/a**2
+-c + log(x/a)
+cos(log(b + x))
+b*(a + log(x))
+(-a + x/a)/c
+log(b*x + b)
+a*(-b + x) - c
+b*cos(sin(x))
+a + b*x/c
+cos(sin(x))/b
+c*(-b + x)**2
+log(a**2*x**2)
+(-c + log(x))/a
+(-a + x**2)/a
+log((a + x)**2)
+a*(c + x/b)
+log(cos(x)/c)
+-a + 2*c + x
+cos(sin(x)/b)
+-b + sqrt(a*x)
+cos(a*x + b)
+sin(cos(x))
+a + c + x
+cos(x)/a
+-sin(b - sin(x))
+(c + x/b)/b
+c + sin(b + x)
+log(b**2*x**2)
+b + x**2/a
+cos(c*x)/b
+b*(-c + sin(x))
+(c + x)/(b*c)
+sin(2*c + x)
+-2*b + sin(x)
+-a + cos(a + x)
+log(a*(c + x))
+c**2*x**2 + c
+a + cos(b - x)
+b*(-a + cos(x))
+b*(-b + sqrt(x))
+-a + (a + x)**2
+sin(sin(x/a))
+sqrt(x)/a**2
+sqrt(log(c + x))
+a*(-b + log(x))
+sqrt(x**2/c)
+log((a + x)/a)
+log(cos(sin(x)))
+c - sin(b - x)
+a*(-b + x)**2
+cos(sqrt(b + x))
+c**2*sin(x)
+sin(sqrt(a + x))
+-c + sqrt(-c + x)
+(c + x**2)**2
+cos(c*cos(x))
+log(b*x + c)
+x**4/b**4
+b*sin(x/a)
+-a + cos(x)
+sqrt(log(x))/c
+a + c*x + c
+(b*x - b)/b
+cos(a + b*x)
+sqrt(-a + x)/c
+log(x/b)**2
+b*(-a + b + x)
+log(a + x)/c
+c*log(log(x))
+(-c + x)**2
+-sin(a - x)/b
+-a + sqrt(x/c)
+cos((c + x)/b)
+sin(b*sqrt(x))
+log(log(log(x)))
+sqrt(log(b*x))
+-sin(b - c*x)
+(-c + log(x))/b
+(-a + x/b)/c
+b*x**2
+a*(c + x) - b
+-a + log(sqrt(x))
+c**4*x**4
+sin(c + cos(x))
+-a + b**2*x**2
+cos(sqrt(x)/a)
+log(-sin(b - x))
+sin(c*cos(x))
+cos(c + x)/b
+-c + (c + x)/a
+(-b + x)/a
+sin(x/b)/b
+-sin(c - log(x))
+-c + (-c + x)/a
+b + sin(x)**2
+c**2*x**2/b**2
+cos(sqrt(x/b))
+log((a + x)/b)
+c*sqrt(x)/b
+(-c + log(x))/c
+a*(a + b + x)
+b*(-c + sqrt(x))
+sqrt(sqrt(x)/c)
+-b + cos(cos(x))
+b*x + 2*b
+c*cos(x) + c
+a + x**2/a
+-b + c*sqrt(x)
+sqrt(log(sqrt(x)))
+c + (-b + x)/b
+a + log(x)/a
+c*x/b**2
+c*(-b - c + x)
+cos(sin(c - x))
+(-a + x)**2/a**2
+b*c*x
+sin(c*x + c)
+b*sqrt(x/c)
+log(-b + log(x))
+a - c + sin(x)
+sin(b*(-c + x))
+b + (-b + x)/a
+cos(c*(b + x))
+(-b + x)**2
+(a*x + c)/c
+log((-b + x)**2)
+a*(-c + cos(x))
+a*(a*x - c)
+cos(a*sqrt(x))
+-b + x/b
+c + (-a + x)**2
+b + log(x)/c
+c*(-b + x)/a
+sin(b - c + x)
+log(sqrt(-a + x))
+b*x - c
+(-c + cos(x))**2
+(a + x)**2/c**2
+log(-b + x)**2
+-2*b + x**2
+-sin(a + b - x)
+b**2*(a + x)**2
+a**2*x**2 - b
+a*sin(b*x)
+sqrt(b*x)
+b*sqrt(x/a)
+a*x + a
+(-c + x/c)**2
+a + x/b
+(-c + x)/c**2
+-sin(b - x**2)
+sqrt(log(-c + x))
+c*(c*x + c)
+log(cos(x**2))
+b*sin(x**2)
+log(x/b)
+sqrt(b*sin(x))
+b*(b + c*x)
+c*cos(sin(x))
+b + (-b + x)/c
+sin(x)**2/b
+cos(c*x/b)
+sin(b*x)**2
+sin((b + x)**2)
+a*x/b - c
+sqrt(sin(x/b))
+cos(cos(a*x))
+a + cos(x/a)
+sqrt(-2*b + x)
+sqrt((-a + x)/a)
+a*(b + x) + b
+c*sin(x/b)
+cos(a*x - b)
+sqrt(sin(x)/a)
+log(-c + x)/a
+x/a**3
+cos(x/b)
+b*(-b + x) + c
+-sin(a + c - x)
+(-b + x)**2/c
+-b + (b + x)/b
+sin(x/(a*b))
+a*(a - c + x)
+-a + log(sin(x))
+c + (b + x)/c
+b*x - 2*b
+x**2/a**4
+sin(b + log(x))
+log(-a + x)/a
+sqrt(2*c + x)
+sqrt(log(x))/b
+a*(-c + x) - a
+2*b + sin(x)
+-a + sin(a + x)
+sin(sin(x))/b
+-a + log(log(x))
+b + (a + x)/a
+sin(sqrt(x))/c
+sin(x**2/a)
+b*(-b + log(x))
+-b + x/c
+-a + log(b*x)
+(a*x - c)**2
+x/b
+x**4/c**2
+(b + x)**2/a
+log(-a + cos(x))
+a + cos(a*x)
+c + log(c + x)
+log(x**2)**2
+log(-a + log(x))
+sin(cos(x))/c
+x**4/a
+sqrt(b*x - b)
+(-b + sin(x))/b
+b*x**(1/4)
+sin((c + x)/a)
+(c + x)/(a*b)
+sin(b*(b + x))
+c*(b + log(x))
+sin(-b + c + x)
+(-a + sin(x))/c
+b*(b*x - c)
+log(log(b + x))
+log(a*x + a)
+cos((a + x)**2)
+b*(b + x/b)
+sqrt(x/a)/c
+sin(cos(x)**2)
+log(sin(x/a))
+sin(x)/b
+(-a + x)**4
+(-a + c + x)/a
+-b + cos(x/a)
+c**2*sqrt(x)
+sqrt(-c + x)/a
+a + b*x + b
+sqrt(c + log(x))
+a*x/c + c
+b**2*(-a + x)**2
+-c + (c + x)/b
+sqrt(cos(a - x))
+a*(c + x/c)
+(-a - b + x)/c
+a*sqrt(a*x)
+log(a + b + x)
+log(-c + x)/c
+sqrt(sin(sin(x)))
+(-c + x/a)**2
+cos(a - c + x)
+b**2*(-c + x)
+b + x/(b*c)
+sin(log(c*x))
+(-a - c + x)/b
+a**2*x**2 + b
+c*sqrt(c + x)
+(-c + x/a)/a
+log(a*x - c)
+c*(b + x) - c
+a + x/a**2
+(-2*b + x)/b
+cos(cos(x)/b)
+a - sin(c - x)
+-c + cos(b + x)
+sqrt(-a + x)
+a*(b + x**2)
+sin(cos(x/a))
+-b + sin(a*x)
+-a + sin(x/c)
+c + x**2/c**2
+cos(x**2)
+a + c*sin(x)
+sin(cos(a + x))
+cos(b*x + c)
+(-b + cos(x))/c
+cos((-b + x)**2)
+log(cos(cos(x)))
+-c + c*x/b
+(-b + sqrt(x))/b
+-a - c + x/c
+a*(b + x)/b
+(c + cos(x))/b
+-a + b - c + x
+cos(x/b)**2
+-b + c*(-a + x)
+log(sqrt(x))/c
+cos(x/c)/c
+b*x
+c*cos(x)
+c*x/(a*b)
+sqrt(c*sqrt(x))
+a*cos(x)
+b - c + x/b
+log(sqrt(x)/b)
+(c + sin(x))/c
+cos(cos(x))/a
+a**3*x
+a + (-b + x)**2
+-2*b + cos(x)
+cos(log(sqrt(x)))
+c*(b + x/c)
+log(x/b)/c
+c + x
+b + x/a**2
+-b + sin(x)/b
+-c + sin(sqrt(x))
+sqrt(cos(sqrt(x)))
+b**2*x/a
+cos(cos(log(x)))
+c + cos(c + x)
+cos(a*x)
+(c + x/b)/c
+sqrt(x)/a
+c*(-a + x) + c
+log(c*x**2)
+a*cos(b*x)
+(b + c*x)/a
+-b + x/c**2
+sqrt(-sin(c - x))
+-c + x/a**2
+(-a + x)**2/b**2
+a**2*log(x)**2
+(-2*c + x)/c
+cos(sqrt(x))/a
+cos(x/c)
+a*x + b - c
+cos(b*x)**2
+sqrt(c*(a + x))
+b + log(a*x)
+x**2/b
+b + log(x/a)
+a + x/b**2
+cos(c*sqrt(x))
+cos(2*b + x)
+-a + b + log(x)
+a*sin(x/c)
+x**2/(a**2*c)
+(-a + c + x)/c
+(-a + x)/(b*c)
+-2*c + x**2
+-c + cos(x)/c
+cos(c - x)
+sqrt(a*(-b + x))
+cos((-a + x)/c)
+a*(a + x) - c
+b*(-a + c*x)
+a**2*log(x)
+-b + sqrt(x)
+sqrt(cos(x))
+-a + (a + x)/c
+b*cos(a + x)
+-a + c + sqrt(x)
+-c + sin(c*x)
+cos(c*x)**2
+b*(c + x) + b
+c + log(x)**2
+-a + (-c + x)**2
+(c + x)**2/b**2
+a + x/(a*b)
+a*x**2/b**2
+c + x/(b*c)
+-a + cos(c + x)
+a - b - c + x
+a + c*(-b + x)
+b*(c + x) - b
+c**2*log(x)
+a + cos(a + x)
+c*(a + x)**2
+c + x**2/b
+sqrt(x)/(a*c)
+(a - c + x)**2
+-c + sin(x)**2
+x**2/c**4
+cos(x)**2/a
+b + sin(c*x)
+cos(sin(x)**2)
+cos(x**2)/a
+a*x**2 + c
+-a + log(c + x)
+sin(x)/(a*c)
+-a + sqrt(cos(x))
+-b - c + x**2
+a*cos(x) + a
+b**2*x**4
+sin(log(cos(x)))
+a**2*b**2*x**2
+-c + sin(b*x)
+2*a - c + x
+a*(c + x)/c
+a*(a + x) - a
+log(c + cos(x))
+(a + x)**2/b**2
+(b + x)**2/c
+(-a + b + x)/c
+c*sqrt(-c + x)
+sin(sqrt(x))/b
+log(sin(c*x))
+(-b + x/c)/b
+-b + sqrt(c + x)
+b + (-a + x)/a
+cos(x**2/a)
+cos(sin(x))**2
+log(x/a)
+-b + c + log(x)
+sin((-c + x)**2)
+a*(b + x) - a
+sin(x**2/a**2)
+-b + log(x)/a
+b*(-a + x/c)
+sin(c*x**2)
+-a + x/(a*b)
+a*(-c + x)/b
+sin(cos(sin(x)))
+c*sin(x/a)
+log(sqrt(x))/a
+b*sin(x)/c
+(a + x**2)/b
+-a + b + x/c
+(c + x/a)/b
+c*(-a - c + x)
+c + x/a
+cos(b**2*x)
+-b + log(x**2)
+sin(c**2*x)
+-a + log(c*x)
+b*sin(b + x)
+-b + sin(c*x)
+sqrt(a - b + x)
+b*(-c + x)/a
+sqrt(x/a**2)
+sin(a + sin(x))
+-a + log(x)/a
+cos(a + x/c)
+cos(b - x/a)
+cos((-c + x)/b)
+a + cos(log(x))
+-a + cos(x/b)
+cos((c + x)/c)
+b + x/c
+a + c*x - c
+(a + x**2)**2
+log(x**2/c)
+a*x + b + c
+a*b*sin(x)
+log(log(x)/c)
+-b + c*x/b
+a*c*x + b
+log(log(x)**2)
+cos(sqrt(x)/b)
+a*(c + x)/b
+c + x**4
+-c + sin(sin(x))
+(-2*c + x)/b
+cos(x**2)/c
+sin(sqrt(x/a))
+cos(c*x)/a
+cos(c - x/b)
+c*cos(a - x)
+(a + x/a)**2
+cos(x/b)/b
+-a + (-b + x)/a
+sqrt(a*(-c + x))
+(b + c + x)**2
+-c + sin(x)/c
+sqrt(c + x)
+a**2*x**2/c**2
+-c + (c + x)/c
+-a + cos(x)/c
+b + sin(x/b)
+sin(c**2*x**2)
+sin(a*x)
+-a + c*x/b
+cos(a**2*x**2)
+a + log(-c + x)
+sin(a*x)**2
+-b + b*x/c
+c*(c + x) - c
+x**2/(b**2*c)
+(a + x/c)/b
+(a + sin(x))/a
+b*cos(x) + b
+(-b + x/b)/a
+a*(c + log(x))
+sqrt(c + x**2)
+a*sin(sin(x))
+log((-c + x)/b)
+-a + c + x
+a*x - a - b
+(c + x)/c
+sin(c*(-b + x))
+-b + log(log(x))
+c*(a + x)/b
+-a + c*(b + x)
+sqrt(a + c + x)
+-3*c + x
+(-c + sin(x))**2
+-b + cos(b - x)
+(-c + x)/(a*c)
+sin(cos(c - x))
+cos(log(-b + x))
+b + c*(-a + x)
+b*(a + b + x)
+a*(-a + x/a)
+(-a + x/b)**2
+cos(sin(x/b))
+-c + cos(x)/b
+a*sin(log(x))
+c*cos(c - x)
+log(-b + x/a)
+cos(x)**4
+log(x/c)/c
+log(-a + c + x)
+b*log(x)
+a*(-c + x)**2
+a*sin(x/a)
+c*(-b + x**2)
+-c + x/(a*c)
+b*(-b + x)/a
+sin(sqrt(x/b))
+(-b + x**2)/a
+c + sin(sqrt(x))
+log(c + x)**2
+-a + (-a + x)**2
+log(x**2/b**2)
+sqrt(b + cos(x))
+-a + cos(log(x))
+a*x**2 + b
+(a*x + a)/a
+-a + log(-b + x)
+-a + log(x**2)
+b*(b + sin(x))
+sin(x)**2/b**2
+-a - c + x**2
+sin(cos(cos(x)))
+a*x + b
+x**2/(a**2*b)
+a*sin(a*x)
+c*(a*x - a)
+a**2*(-a + x)
+-b + cos(x/c)
+x**2
+-b + sin(x/a)
+log(sqrt(x))
+c*(a + sin(x))
+b + cos(c*x)
+-c + log(x/b)
+c*x**2/a
+sqrt(-b + x/c)
+a + c*x/a
+b*(-a + x/a)
+a**2*(c + x)**2
+log(cos(x)/a)
+cos(x**2/a**2)
+-a + sqrt(c*x)
+log(x)**(1/4)
+-b + cos(b*x)
+-a + b**2*x
+cos(c - x)/c
+c*log(x**2)
+a + x**2
+a*sin(c*x)
+c*(c + sin(x))
+cos(b + x/a)
+-3*b + x
+sqrt(a + b + x)
+b*cos(log(x))
+(b*x - b)**2
+cos(sin(c + x))
+c*sqrt(x**2)
+c - sin(a - x)
+c*(-a + x)/b
+a*x - b + c
+(-b + sin(x))**2
+a + x**2/b
+a + x/c**2
+2*b + log(x)
+b*c*(b + x)
+a*(a*x + c)
+-b + cos(sin(x))
+b*(b + x) - b
+(a + b*x)**2
+a + 2*b + x
+sqrt(x/c)/c
+b*x + 2*c
+(2*b + x)/b
+c*sin(b*x)
+-a + sqrt(b*x)
+a*(-a + x) - c
+-a + c**2*x**2
+log(cos(b + x))
+(b - c + x)/c
+c*log(b + x)
+c*sin(x)/b
+-c + x/a
+(-c + sqrt(x))**2
+(a + cos(x))/b
+(-c + x)**2/a**2
+cos(a + x)/c
+-2*a + x**2
+a*(b*x + b)
+a*(b + x/b)
+sqrt(cos(c + x))
+b - c + x/c
+cos(cos(x/a))
+log(b*(c + x))
+c + x**2/b**2
+x/a
+c*(b*x - c)
+cos(c - x/a)
+log(-a + x/a)
+sqrt(-c + log(x))
+a*(-b + x/a)
+c*cos(x)/a
+cos(sin(a - x))
+log(a + x/a)
+-2*b + x/a
+log(a - c + x)
+-b + log(x)/b
+log(a + x)/a
+cos(b - x)/a
+b*log(x) - b
+a**2*c*x**2
+sin(-a + b + x)
+c*(c + x/b)
+cos(c*(a + x))
+a*(c + x/a)
+sin((c + x)**2)
+sqrt(b*c*x)
+b + sin(x)
+a**2*(-c + x)
+a - c + x/a
+b*cos(a - x)
+-b + log(-a + x)
+a*(a + x) + a
+sqrt(b*x**2)
+-b + c + x/a
+b*c*(-a + x)
+-a + cos(x/a)
+b + x**4
+cos(a*b*x)
+(-b + cos(x))/a
+sin((c + x)/c)
+sqrt(cos(x))/c
+a + sin(c + x)
+cos(c*(-a + x))
+a*(b - c + x)
+x/c**2
+sin(a*(-a + x))
+-b + log(b*x)
+a*log(c + x)
+log(c*cos(x))
+log(sqrt(-b + x))
+a*x + 2*c
+sqrt(cos(x)/b)
+b + log(sqrt(x))
+(-a + b*x)/a
+-b + sqrt(b + x)
+sin((b + x)/b)
+cos(x**2/b)
+-a + b*(c + x)
+b*log(x) + c
+a*x + a - b
+sin(a**2*x)
+a*sqrt(log(x))
+log(log(b*x))
+c*(c + x)/a
+-2*a + x/c
+sqrt(a + log(x))
+-b + log(sqrt(x))
+sqrt(b*x + c)
+sin((a + x)/b)
+c*log(x) - c
+(c + x/c)/a
+b*x + c
+cos(sin(sin(x)))
+a*(-c + x/a)
+b**2*sqrt(x)
+(b + x)**2/c**2
+b - c + sqrt(x)
+b + x/b
+a*log(x) + c
+a*sqrt(sin(x))
+sqrt(-b + sqrt(x))
+-a + log(-c + x)
+a*(c + x) + b
+-a + log(a*x)
+a*x + c
+sin(sin(x)/a)
+-c + cos(x)**2
+log((-c + x)/a)
+sin(c*log(x))
+sqrt(x/(b*c))
+b + c*(a + x)
+(-a + log(x))/a
+a*c*x**2
+b*(c + x)**2
+-sin(b - x/a)
+c*sin(x)
+(b + x/b)/b
+(a + x)/(a*b)
+(b + x**2)/c
+cos(x)**2/b**2
+cos(log(cos(x)))
+b*sqrt(log(x))
+a + (-c + x)/b
+-b + x
+a*(a + x/c)
+b + sin(sin(x))
+c + (-c + x)/c
+sin(b + x)/b
+c*(-c + x)/b
+sin(cos(x))/b
+b + c*x/b
+c**2*cos(x)**2
+log(a*(-c + x))
+-b + x/(a*c)
+-c + (-c + x)/c
+-a + (c + x)/a
+sqrt(b*(a + x))
+sqrt((b + x)/a)
+a*x + 2*a
+cos(c + sin(x))
+-a - b + x/c
+sin((-b + x)**2)
+a - 2*c + x
+(-b - c + x)**2
+sin(x**2)/a
+(c + x**2)/a
+b*(b + x/a)
+cos(sin(a*x))
+cos(a*x)/a
+-b - c + cos(x)
+-b + sqrt(-a + x)
+log(b + x**2)
+cos(x/c)**2
+sin(a + x/b)
+b*(-2*c + x)
+b*log(cos(x))
+sqrt(x/c)/b
+c*(b + x)
+log(a*x + b)
+b*(-b + x)**2
+c + log(x/c)
+sin(x**2)**2
+cos(log(x))/b
+sin(a*(c + x))
+sqrt(-c + x/c)
+-a + b*x/a
+c*(-a + c*x)
+x**2/(a*b)
+log(log(cos(x)))
+log(c + log(x))
+sin(a + b + x)
+log(c + x/b)
+x**4/a**2
+log(cos(b*x))
+-a + b*(-b + x)
+c*(-c + x) - c
+b*c*log(x)
+sin(b*log(x))
+b*sin(a + x)
+(c + x**2)/b
+cos(x/(b*c))
+sqrt(b*x)/c
+-a*sin(c - x)
+-a + c*cos(x)
+-sin(b - x)/b
+b*x - 2*c
+-b - sin(c - x)
+a*(-a + log(x))
+a*log(x)/c
+a + (-a + x)/b
+a*(a*x + b)
+log(a + sin(x))
+sin(c*x - c)
+b*c*x + b
+(-b + c*x)/a
+-a - c + cos(x)
+-b + cos(x**2)
+-sin(a - x)
+c*(a + c + x)
+cos(b*x - b)
+log(sqrt(x))/b
+sin(sin(x/c))
+-a + x**2/c**2
+a*b*x - a
+(x/a)**(1/4)
+-c + log(-c + x)
+b*cos(x)/c
+b - c + cos(x)
+c*(-a - b + x)
+-a + cos(x)**2
+a + log(log(x))
+(-b + x)**2/a
+cos(sqrt(x))
+sin(x/b**2)
+-a + c + x/b
+log(-2*a + x)
+log(x**2)/b
+sin(log(x/b))
+-c + cos(a - x)
+(-a + cos(x))/b
+-b + c*(b + x)
+sin(a**2*x**2)
+c*sin(sqrt(x))
+a*cos(log(x))
+c*x**4
+c + x/(a*b)
+log(b*x)
+log(c + x**2)
+a*c**2*x
+(b + x/b)/a
+b*x - b + c
+a - sin(b - x)
+b*(b + log(x))
+sqrt(x/a)
+log(log(x/a))
+a + c + log(x)
+log((-b + x)/b)
+sin(x)**4
+c*(a*x + c)
+sqrt(sin(a*x))
+c + cos(x/a)
+(a + c + x)/a
+b + x**2/b
+cos(c + x/a)
+-a + b*x + b
+log(sin(x/b))
+(-b + x/a)/c
+c + c*x/a
+sqrt(x)/b**2
+(-c + x)**2/c**2
+-b - sin(b - x)
+a**2*c**2*x**2
+log(x)/(a*c)
+b*log(x**2)
+sin(a - c + x)
+x**(1/8)
+a + cos(x)**2
+sin(a*b*x)
+(2*b + x)/a
+-2*b + x/b
+log(cos(a*x))
+-b - sin(a - x)
+a + (b + x)/c
+-c + (b + x)/b
+-a - b + x/a
+(-b + x**2)/c
+log(2*c + x)
+(-a + x)**2/b
+a + c*(-c + x)
+-c - sin(b - x)
+sin(b + x)/a
+(2*a + x)/a
+a*(b + c*x)
+b + (b + x)**2
+log(x**2/a)
+sqrt(cos(x))/a
+(b + x)/(a*b)
+a*sqrt(x**2)
+b*(b - c + x)
+c + (b + x)/a
+-c + sqrt(c*x)
+cos(c - x)/b
+b + (-c + x)/c
+b*(a - c + x)
+b*sin(c*x)
+sqrt(cos(x)/a)
+a*log(x) - c
+sqrt(x)/(a*b)
+-a + cos(a - x)
+-a + cos(x)/a
+log(b + x)
+cos(c*sin(x))
+cos(a*c*x)
+(b + x)/(b*c)
+sqrt(a*x/c)
+sqrt((-c + x)/c)
+log(-a + sqrt(x))
+-c + (-a + x)**2
+b + b*x/c
+c + cos(b + x)
+a*b*x - b
+(-b + x)/c**2
+cos(x/c)/a
+log(cos(x/b))
+sin(a + log(x))
+a + (-c + x)**2
+a*x**2 + a
+c*(-a + x/b)
+2*b + x
+cos(sin(b + x))
+sin(log(x**2))
+b*(-c + x) - c
+(a*x + c)/b
+cos(b - x)/b
+a + (-b + x)/c
+sqrt(-a + cos(x))
+(c + x/a)/c
+-b + (-a + x)/c
+b*(a + x/a)
+cos(cos(x**2))
+sqrt(x/b)
+b*cos(c + x)
+b*cos(b*x)
+b*sqrt(-b + x)
+log((b + x)/a)
+cos(b*x + b)
+cos(x)/(a*b)
+2*b - c + x
+cos(sqrt(b*x))
+c*log(x/a)
+-2*b + c + x
+log(b*x)/c
+-c + log(log(x))
+b + b*x/a
+(b + x)/(a*c)
+a**2*(-b + x)**2
+sqrt(a + x/a)
+-c + log(-b + x)
+cos(b - x**2)
+a*log(x)/b
+c*(-c + log(x))
+-2*c + x
+sin(sin(x)**2)
+b + sin(x)/b
+b**2*(c + x)
+sqrt(x/(a*c))
+b**2*cos(x)
+(c + x)**2/c**2
+cos(c*x/a)
+sin(sqrt(a*x))
+log(sin(x**2))
+a*(-b + cos(x))
+c*log(b*x)
+-c + x/c
+a*x/b + c
+(a + b*x)/c
+b - c + log(x)
+sqrt(-a - b + x)
+sin(b*(c + x))
+cos(sin(cos(x)))
+sin(sin(x))/a
+-c + log(sqrt(x))
+b + sin(x)/a
+a + b*(b + x)
+b*sqrt(x)
+-c + (-b + x)/c
+sqrt(b*x + b)
+b*cos(x/a)
+cos(c*(-c + x))
+-c + c*x/a
+sqrt((c + x)/b)
+cos(cos(sin(x)))
+cos(log(x))
+a*x**(1/4)
+a*(-b - c + x)
+log(x)**2
+a*c*sqrt(x)
+c*(-c + cos(x))
+c*(b + x)/b
+-sin(b + c - x)
+log(-a + b*x)
+(-b - c + x)/b
+sin(a*c*x)
+-b + sqrt(cos(x))
+cos(b*x**2)
+(-a + x)/b**2
+c + sin(c + x)
+sqrt(c*x)/a
+a**3*x**2
+a*(b + x) - c
+sqrt(a + x)/a
+sin(cos(a*x))
+-c + (-a + x)/c
+a**2*(a + x)
+cos(a - x)/c
+(a*x + a)**2
+sin(log(x/c))
+a*(-c + sqrt(x))
+x**4/a**4
+log(b*x - b)
+sin(sqrt(c + x))
+cos(c - x)/a
+a*(c*x - c)
+a*log(x**2)
+-b + (a + x)**2
+c*(-b + x/c)
+b*(b*x - b)
+cos(x)/(b*c)
+a*(-c + x/b)
+cos(a + x)
+sqrt(-a + b + x)
+log(b*(a + x))
+b + c*x**2
+(c + x)/b**2
+a*cos(a + x)
+(a + cos(x))/a
+sqrt(c + x)/b
+b*(a + x/c)
+sqrt(a**2*x)
+-c + (-b + x)**2
+-a - c + sqrt(x)
+sqrt(cos(x/b))
+c*sin(x**2)
+sin(b*cos(x))
+log(x**2/b)
+cos(log(-c + x))
+sin(x/a)/a
+sqrt(b**2*x**2)
+log(sin(x)/a)
+sqrt(x)/(b*c)
+b + sin(x/c)
+a*(a + x/b)
+sqrt(a + x/b)
+2*a + x
+a*(a + b*x)
+sin(cos(x))**2
+b*(b + x) - c
+(-b + log(x))**2
+sin(x/c)/b
+log(log(a*x))
+sin(cos(x))/a
+-c + x/b**2
+sin(x/c**2)
+-a + c**2*x
+(-c + x)/b
+sqrt(b + log(x))
+c*sqrt(a + x)
+-a + b + cos(x)
+x**2/(a*b**2)
+b*sqrt(x/b)
+a*b*x + b
+a - c + x**2
+a + sin(b + x)
+(-c + x)/a**2
+b**2*(-b + x)**2
+c + log(x)
+-b + (-a + x)**2
+cos(a - x)**2
+x/(a**2*b)
+(b + sin(x))/b
+-sin(b - x)
+(-a + b*x)/c
+sin(a*x**2)
+cos(b + x/c)
+b + sin(sqrt(x))
+sin(x/c)/c
+-a + c*x - c
+cos(sin(x**2))
+b*sqrt(sin(x))
+log(c*x)/b
+b*c*cos(x)
+a + c*(a + x)
+(a + c*x)/c
+(2*b + x)**2
+b*(a + x) + b
+a*(b + x) - b
+a*x - a - c
+-a + b*x
+cos(x/c**2)
+sqrt(sin(a + x))
+cos(cos(c - x))
+cos(log(x))**2
+a + cos(c + x)
+a*(-b + x)/c
+b*(c + x/c)
+cos(sqrt(a + x))
+-a + sqrt(c + x)
+-b + x**4
+a*(b*x + c)
+-b + (-a + x)/a
+b + c**2*x**2
+c*(c + log(x))
+2*a + x**2
+-sin(2*a - x)
+x*exp(-c)
+cos(c + x)/a
+c**2*(-c + x)**2
+cos((a + x)/c)
+cos(c*(-b + x))
+log(x/c)/b
+b - c + x
+2*a + cos(x)
+cos(b*(c + x))
+c*(-c + x) + c
+-c + log(cos(x))
+(a + c*x)**2
+cos(cos(x)/a)
+-b + log(cos(x))
+sin(sqrt(b*x))
+log(x)**2/a
+-a - c + x/a
+(c + x)**2/a
+a**2*sin(x)**2
+b*(b*x + b)
+a*sqrt(x)/c
+(-c + x)**2/c
+(a + x)/(b*c)
+-b + log(x/c)
+-a + cos(c - x)
+a*b*log(x)
+(b + cos(x))**2
+cos(b + x)/a
+c**2*x + c
+-b + c*x
+(2*a + x)/b
+b + (-a + x)**2
+log(x/a)/a
+log((-a + x)/b)
+-b + log(sin(x))
+log(b*x)/b
+sin(a - x)**2
+c*(-b + c + x)
+cos(a - x)/a
+x**8
+b*sin(x) - c
+b*(a*x + c)
+x**2/c**2
+cos(sin(x))/c
+(-b + c*x)**2
+log(a + x)
+2*c + x/a
+c*x/a
+-a + sqrt(sin(x))
+c*log(x/b)
+(a + x)**2/a**2
+c*cos(x) - c
+sqrt(b + x)/a
+a*log(log(x))
+(x/c)**(1/4)
+c*sqrt(sin(x))
+-a + b + x/b
+b*(-c + log(x))
+sin((a + x)/a)
+log(x/(a*c))
+sin(cos(b*x))
+log(a + c*x)
+b*(a - b + x)
+sqrt(cos(sin(x)))
+a - b + log(x)
+log(-a + x)**2
+b + log(x)**2
+sqrt(log(b + x))
+cos(x/b**2)
+sin(sqrt(cos(x)))
+a + c + x/c
+a*(a + x)**2
+sqrt(c*x - c)
+a*sqrt(x/c)
+log(b + x/a)
+a + (-c + x)/c
+-sin(a - x/a)
+sqrt(c + cos(x))
+a*log(a + x)
+-b + b*x/a
+x/c**3
+(c + sin(x))**2
+(-b + c + x)/a
+sin(b + x/a)
+x**2/b**2
+cos(a*(-a + x))
+sin(c*x)
+c*sqrt(b + x)
+cos(a + x/a)
+a*(-a + x) + a
+sqrt(cos(a + x))
+log(c + x/a)
+b + (c + x)**2
+-c + log(x)
+cos(b*(a + x))
+sqrt(b*x)/b
+b + x**2/c**2
+b**2*x**2/a**2
+x**2/b**3
+sqrt(-b + x/a)
+log(-b + x)
+(-a + x/c)/a
+-b + sin(x)/c
+-a + log(x)
+b + log(-a + x)
+b*(-a - b + x)
+c*(-c + x)**2
+b*cos(x/b)
+c*(c*x - c)
+(-a + x/a)/b
+c*cos(cos(x))
+log(x)**2/b**2
+x**2/b**4
+b**2*(a + x)
+(-b + sin(x))/c
+b + x/(a*c)
+c*x/a**2
+a*(b + c + x)
+cos((-b + x)/a)
+cos(sqrt(x**2))
+cos(c**2*x**2)
+log(c*sin(x))
+c*(b + x) + c
+sin(a*x)/c
+cos(b + c - x)
+c*(a + x)
+cos(log(x)**2)
+-b + c + x
+log(-c + x/c)
+a*(c + x)
+(x/b)**(1/4)
+b*(b + x/c)
+a + cos(x)/b
+b + log(b*x)
+-a - b + log(x)
+a*b*x + a
+b + log(c + x)
+cos(2*c + x)
+b - 2*c + x
+a + a*x/c
+a**2*(-c + x)**2
+sin(b*sin(x))
+sqrt(log(log(x)))
+a + sin(log(x))
+log(x)
+c + (-a + x)/c
+a + c + x/b
+a*cos(x)/c
+(c*x + c)/a
+-b + cos(x)**2
+a + cos(cos(x))
+cos(a*(-c + x))
+b*sin(x)/a
+sin(b + x**2)
+(-a + x/c)**2
+(b + x)/b
+(b + x**2)/b
+-b - c + sin(x)
+(a + x/a)/b
+a + cos(c - x)
+a*(-a + x) - b
+-c + (-a + x)/b
+2*b + x**2
+-c + x**2/c
+sqrt(x**4)
+a - c + sqrt(x)
+-sin(c - x)/a
+cos(c*x**2)
+c*(-b + sqrt(x))
+b*cos(x) - b
+-b + sin(sqrt(x))
+-b + c**2*x**2
+cos(sin(x/a))
+sqrt(x)/c**2
+(a*x - c)/b
+sqrt(log(x/a))
+sin(b**2*x)
+c*(b - c + x)
+a*(-c + sin(x))
+a*c**2*x**2
+(c + cos(x))/c
+a + b + cos(x)
+-b + c + x/b
+cos(c + x**2)
+b*(c*x + c)
+-b + sqrt(x/a)
+sin(x**2/b**2)
+sqrt(x/a)/a
+-a + c*x + c
+x**4/b**2
+c*(a + x)/a
+c + (-c + x)/a
+log(-b + c*x)
+sqrt(cos(x)**2)
+sin((-a + x)**2)
+c*(b + c + x)
+b + c*x
+b*cos(b - x)
+b + log(log(x))
+sin(x/b)/a
+(-a - c + x)/a
+cos(a + b - x)
+b + c + sin(x)
+log(-a + c*x)
+sin(b*x - b)
+-b + log(x)/c
+-a + (b + x)/c
+b*(-b + x)
+c + x**2
+log(-b + x)/a
+(b + x)/b**2
+c**2*x**2/a**2
+sin((-c + x)/a)
+-b + (-c + x)/b
+cos(b - log(x))
+-a + b*sin(x)
+-b + c*(-b + x)
+sin(cos(x/c))
+sin(sqrt(x/c))
+log(b*c*x)
+a*(c + x) - a
+b*(-b + sin(x))
+c*(-a + x) - c
+-sin(a - x/c)
+(b*x)**(1/4)
+a*x/b**2
+cos(sin(b - x))
+-b + sin(x/c)
+a*(-b + sin(x))
+b*sqrt(a + x)
+cos(sqrt(x))**2
+b + cos(c - x)
+a - b + sqrt(x)
+(a + x)**2/a
+(b + x/a)/a
+sqrt(-a + log(x))
+a*(-a + c*x)
+(-c + x)/a
+sin((b + x)/c)
+sin(a + x)**2
+sin(b + x)/c
+sqrt(-b + log(x))
+b*x + b + c
+sqrt(sin(x**2))
+log(a*(-b + x))
+-a + sin(c + x)
+c*(-a + x**2)
+sin(c*x)/a
+-a + c*x/a
+b*(-a + c + x)
+sqrt(sin(c*x))
+c*cos(c + x)
+c*(-c + x/b)
+b*(b*x + c)
+-c + sin(x)/a
+c + sin(x)/b
+2*c + log(x)
+log(x**4)
+-2*c + sin(x)
+(b + c + x)/c
+(b + x/a)/c
+sqrt(log(x/b))
+a + (c + x)/a
+a*(-c + x) + c
+-b + log(a + x)
+b*sin(x/c)
+cos(a + b + x)
+-c + x/(b*c)
+(-a + cos(x))/c
+a*cos(x) - a
+sin(a*x/c)
+sin(sqrt(x))/a
+log(x**2)/c
+b*(a + c*x)
+2*c + x/c
+-2*b + log(x)
+a*(-b + x)/b
+c*cos(b - x)
+-b + (-b + x)/c
+sin(x**2)
+a + cos(x/c)
+(c + log(x))/a
+log(c*(c + x))
+(c + cos(x))/a
+-c + x**2/b
+sqrt(b*x/a)
+b*log(sqrt(x))
+a + b*(-b + x)
+cos(sqrt(a*x))
+-b - c + log(x)
+a**2*x
+a*x - 2*a
+(c + sin(x))/b
+(-b + x**2)**2
+sin(a + x)/a
+sin(c*(-c + x))
+sin(x**2/b)
+a + (a + x)/a
+-2*b + x/c
+log(x/a)/b
+(-c + x)/(b*c)
+sqrt(x**2)/b
+b + cos(x/b)
+log(-a + x**2)
+log(c*sqrt(x))
+c + log(log(x))
+b*(-b + x)/c
+log(-b + x**2)
+sqrt((-b + x)/a)
+b + (-b + x)/b
+sin(log(a*x))
+b*(a*x - a)
+log((c + x)**2)
+c + sin(a*x)
+(a*x + b)**2
+a + b*x - b
+cos(a - x)
+c*(a + x/b)
+cos(log(-a + x))
+sqrt(c*sin(x))
+cos(c*log(x))
+c*sin(a*x)
+(a*x - a)/a
+c*(-a + x/a)
+b*(b + x)**2
+cos((a + x)/a)
+sin(b + c + x)
+c*sin(x) + c
+b + log(x/b)
+b*cos(sqrt(x))
+a*log(x/a)
+sin(sin(x))**2
+2*a + b*x
+-a + b*x/c
+-b + c*cos(x)
+c*log(x) + c
+-c + (a + x)/b
+a*sqrt(c*x)
+c + log(cos(x))
+-a + sqrt(x)/c
+a*x - a + c
+(a + x/b)**2
+c**2*log(x)**2
+(b - c + x)/a
+log(sin(x)/b)
+b + cos(x)/c
+sqrt(x**2/b**2)
+-b + sqrt(-b + x)
+log(cos(x))/b
+sin(log(-b + x))
+2*a + c*x
+(b + x)/a
+a*x/c - c
+a*(-a + x) - a
+b*(-c + cos(x))
+b*x/c
+sin(a*(a + x))
+-c + cos(a*x)
+a**2*x**2 + a
+-a + a*x/b
+a + (a + x)/c
+sqrt((-b + x)**2)
+(-a + sqrt(x))/b
+a + log(x/c)
+(-a + x/c)/b
+-c + sin(x/c)
+c + cos(cos(x))
+cos(c**2*x)
+(x**2)**(1/4)
+-c + sqrt(-a + x)
+a*(a + x) + c
+(-c + x**2)**2
+a*b*(-b + x)
+-c + x**(1/4)
+-b + cos(x)
+b*x - b - c
+-b + sin(b*x)
+a + c*x**2
+-b + c*x**2
+c*sqrt(x/a)
+-a - b + x/b
+-b + sin(cos(x))
+-b + c*x + c
+sqrt(cos(a*x))
+a*(a - b + x)
+log(x**2/c**2)
+log(a*x**2)
+b + (-c + x)/a
+c*cos(b*x)
+sin(cos(c + x))
+a + (a + x)**2
+a*(a*x - a)
+sin(a*x - b)
+(-a + log(x))/b
+x*exp(-b)
+sqrt(c**2*x**2)
+sqrt(b*(-a + x))
+sqrt(x**2)/a
+(-a + log(x))**2
+c*(-a + sqrt(x))
+(-c + x/b)/c
+(a*x - c)/c
+cos(c + x)/c
+(c + x)/(a*c)
+-a + x**2/b
+a*sqrt(-b + x)
+log((-b + x)/a)
+sqrt(cos(c*x))
+a*(-b + x) + c
