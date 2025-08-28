@@ -127,11 +127,7 @@ class TrainingLogger(BaseCallback):
         return True
 
     def _on_training_end(self) -> None:
-        if self.Tsolves:
-            self.Tsolve = float(np.mean(list(self.Tsolves.values())))
-        else:
-            self.Tsolve = float('inf')
-        timed_print(f"[{self.algo_name}] Training finished | Tsolve={self.Tsolve}")
+        timed_print(f"[{self.algo_name}] Training finished | Coverage={self.coverage}")
 
 # --- Run a single trial ---
 def run_trial(agent: str, env_name: str, gen, Ntrain: int, seed: int, save_dir: str,
@@ -193,7 +189,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="RL Debug Script")
     parser.add_argument('--env_name', type=str, default='multi_eqn', help='Environment name')
     parser.add_argument('--agent', type=str, default='ppo-tree', help='Agent type')
-    parser.add_argument('--Ntrain', type=int, default=5*10**6, help='Total training timesteps')
+    parser.add_argument('--Ntrain', type=int, default=5*10**3, help='Total training timesteps')
     parser.add_argument('--seed', type=int, default=10, help='Base seed')
     parser.add_argument('--gen', type=str, default='abel_level3', help='Generator for multi_eqn')
     parser.add_argument('--hidden_dim', type=int, default=64, help='Hidden dimension')
