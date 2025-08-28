@@ -92,7 +92,14 @@ class singleEqn(Env):
             self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(self.observation_dim,), dtype=np.float64)
         elif state_rep == 'integer_2d':
             self.observation_space = spaces.Box(low=-np.inf, high=np.inf, shape=(self.observation_dim, 2), dtype=np.float64)
-        elif state_rep == 'graph_integer_1d' or state_rep == 'graph_integer_2d':
+        elif state_rep == 'graph_integer_1d':
+            self.observation_space = spaces.Dict({
+                "node_features": spaces.Box(low=-np.inf, high=np.inf, shape=(self.observation_dim,), dtype=np.float64),
+                "edge_index": spaces.Box(low=0, high=self.observation_dim, shape=(2, 2*self.observation_dim), dtype=np.int32),
+                "node_mask": spaces.Box(low=0, high=1, shape=(self.observation_dim,), dtype=np.int32),
+                "edge_mask": spaces.Box(low=0, high=1, shape=(2*self.observation_dim,), dtype=np.int32),
+            })
+        elif state_rep == 'graph_integer_2d':
             self.observation_space = spaces.Dict({
                 "node_features": spaces.Box(low=-np.inf, high=np.inf, shape=(self.observation_dim, 2), dtype=np.float64),
                 "edge_index": spaces.Box(low=0, high=self.observation_dim, shape=(2, 2*self.observation_dim), dtype=np.int32),
@@ -102,6 +109,7 @@ class singleEqn(Env):
 
         else:
             raise ValueError(f"Unsupported state representation: {state_rep}")
+
 
 
     def setup(self):
@@ -199,7 +207,7 @@ class singleEqn(Env):
         elif self.state_rep == 'integer_2d':
             return integer_encoding_2d(lhs, rhs, self.feature_dict, self.max_expr_length)
         elif self.state_rep == 'graph_integer_1d':
-            return graph_encoding(lhs, rhs, self.feature_dict, self.max_expr_length)  
+            return graph_encoding_1d(lhs, rhs, self.feature_dict, self.max_expr_length)  
         elif self.state_rep == 'graph_integer_2d':
             return graph_encoding(lhs, rhs, self.feature_dict, self.max_expr_length)  
         else:

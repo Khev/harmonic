@@ -3,15 +3,296 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 import torch
+import torch.nn as nn
 import numpy as np
 
 from itertools import product
 from functools import lru_cache
 from operator import add, sub, mul, truediv
 from utils.utils_custom_functions import custom_identity
-from sympy import symbols, sympify, simplify, powdenest, ratsimp, E, I, pi, zoo,  Basic, Number, Integer, Float
+from sympy import symbols, sympify, simplify, powdenest, ratsimp, E, I, pi, zoo,  Basic, Number, Integer, Float, Add, Symbol, Mul, preorder_traversal
 from collections import deque
 from torch_geometric.data import Data
+from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
+from gymnasium import spaces
+
+class TreeMLPExtractor(BaseFeaturesExtractor):
+    def __init__(
+        self,
+        observation_space: spaces.Dict,
+        max_nodes: int,
+        max_edges: int,
+        vocab_min_id: int = -64,
+        vocab_max_id: int = 256,
+        pad_id: int = 99,
+        embed_dim: int = 64,
+        hidden_dim: int = 128,
+        K: int = 3,
+        pooling: str = "mean"
+    ):
+        super().__init__(observation_space, features_dim=hidden_dim)
+        self.max_nodes = int(max_nodes)
+        self.max_edges = int(max_edges)
+        self.K = int(K)
+        self.hidden_dim = int(hidden_dim)
+        self.pooling = pooling.lower()
+        assert self.pooling in ("mean", "max")
+
+        self.vocab_min_id = int(vocab_min_id)
+        self.vocab_max_id = int(vocab_max_id)
+        self.pad_id = int(pad_id)
+
+        # Do NOT use MPS (per request). Prefer CUDA if available, else CPU.
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+        num_embeddings = (self.vocab_max_id - self.vocab_min_id + 1)
+        pad_idx_shifted = self.pad_id - self.vocab_min_id
+        if not (0 <= pad_idx_shifted < num_embeddings):
+            num_embeddings = max(num_embeddings, pad_idx_shifted + 1)
+
+        self.embed = nn.Embedding(
+            num_embeddings=num_embeddings,
+            embedding_dim=embed_dim,
+            padding_idx=pad_idx_shifted
+        )
+        self.embed_proj = nn.Linear(embed_dim, hidden_dim)
+        self.node_mlp = nn.Sequential(
+            nn.Linear(hidden_dim + hidden_dim, hidden_dim),
+            nn.ReLU(inplace=True),
+            nn.Linear(hidden_dim, hidden_dim),
+            nn.ReLU(inplace=True),
+        )
+        self.proj = nn.Identity()
+
+        # Cache for dtype-dependent constants
+        self._minus_inf = None
+        self._dtype_cache = None
+
+        self.to(self.device)
+
+    def _id_to_idx(self, node_ids: torch.Tensor) -> torch.Tensor:
+        return (node_ids.long() - self.vocab_min_id).clamp(min=0)
+
+    @staticmethod
+    def _to_device(x, device):
+        if isinstance(x, torch.Tensor):
+            return x.to(device, non_blocking=True)
+        # assume numpy array
+        return torch.from_numpy(x).to(device, non_blocking=True)
+
+    def forward(self, obs: dict) -> torch.Tensor:
+        # Fast, no-copy-ish path from numpy/tensor to device
+        node_ids  = self._to_device(obs["node_features"], self.device)
+        edge_index= self._to_device(obs["edge_index"], self.device)
+        node_mask = self._to_device(obs["node_mask"], self.device)
+        edge_mask = self._to_device(obs["edge_mask"], self.device)
+
+        node_idx = self._id_to_idx(node_ids) if node_ids.dtype != torch.long else node_ids
+
+        B, N = node_idx.shape
+        _, _, E = edge_index.shape
+
+        emb = self.embed(node_idx)            # [B, N, embed_dim]
+        emb = self.embed_proj(emb)            # [B, N, hidden_dim]
+        h = emb.clone()                       # [B, N, hidden_dim]
+
+        # Edge endpoints (src -> dst), per batch
+        src = edge_index[:, 0, :].long()      # [B, E]
+        dst = edge_index[:, 1, :].long()      # [B, E]
+        batch_idx = torch.arange(B, device=self.device).unsqueeze(1).expand(B, E).contiguous()
+
+        for _ in range(self.K):
+            # Flatten safely (handles non-contiguous tensors)
+            src_flat   = src.reshape(-1)                 # [B*E]
+            dst_flat   = dst.reshape(-1)                 # [B*E]
+            batch_flat = batch_idx.reshape(-1)           # [B*E]
+            mask_flat  = edge_mask.reshape(-1).bool()    # [B*E]
+
+            # Filter valid edges
+            src_flat   = src_flat[mask_flat]
+            dst_flat   = dst_flat[mask_flat]
+            batch_flat = batch_flat[mask_flat]
+
+            # Linearize node indices: (b, i) -> b*N + i
+            src_idx = batch_flat * N + src_flat
+            dst_idx = batch_flat * N + dst_flat
+
+            # Gather messages and scatter-add into destinations
+            h_flat   = h.reshape(B * N, self.hidden_dim)     # [B*N, H]
+            messages = h_flat[src_idx]                        # [num_edges, H]
+
+            agg_flat = torch.zeros_like(h_flat)               # [B*N, H]
+            agg_flat.index_add_(0, dst_idx, messages)         # sum over incoming edges
+            agg = agg_flat.reshape(B, N, self.hidden_dim)     # [B, N, H]
+
+            # Node update with masking
+            h = self.node_mlp(torch.cat([emb, agg], dim=-1))  # [B, N, H]
+            h = h * node_mask.unsqueeze(-1).float()
+
+        if self.pooling == "mean":
+            denom = node_mask.sum(dim=1, keepdim=True).clamp(min=1).float()
+            g = h.sum(dim=1) / denom
+        else:
+            if self._minus_inf is None or self._dtype_cache != h.dtype:
+                self._minus_inf = torch.finfo(h.dtype).min
+                self._dtype_cache = h.dtype
+            masked = h.masked_fill(~node_mask.unsqueeze(-1), self._minus_inf)
+            g = masked.max(dim=1).values
+
+        return self.proj(g)
+
+def sympy_expression_to_graph_1d(expr, feature_dict):
+    """
+    Convert a SymPy expression into a graph representation for Torch Geometric.
+    
+    Args:
+        expr (sympy.Expr): The symbolic expression to encode.
+        feature_dict (dict): Dictionary mapping strings (symbols/ops) to scalar integers.
+
+    Returns:
+        torch_geometric.data.Data: Graph representation with scalar node features.
+    """
+    nodes = []  # List of node indices
+    edges = []  # List of (parent, child) edges
+    node_features = []  # Scalar feature for each node
+    node_map = {}  # Maps SymPy nodes to indices
+    stack = [(expr, None)]  # (node, parent_index)
+    node_idx = 0
+
+    while stack:
+        node, parent_idx = stack.pop()
+
+        # Assign unique ID to each node
+        if node not in node_map:
+            node_map[node] = node_idx
+            node_idx += 1
+
+        cur_idx = node_map[node]
+        nodes.append(cur_idx)
+
+        # Get scalar feature
+        if isinstance(node, (int, float, Integer, Float)):
+            feature = feature_dict.get(node, 99)  # e.g., '0', '-1'
+
+        elif node.is_Symbol:
+            feature = feature_dict.get(node, 99)  # e.g., 'a', 'x'
+        else:
+            # Handle operators (e.g., Add, Mul)
+            if isinstance(node, Mul) and len(node.args) == 2 and isinstance(node.args[0], Number) and node.args[0] < 0:
+                feature = feature_dict.get('neg', 99)  # Unary minus
+            else:
+                feature = feature_dict.get(node.func.__name__.lower(), 99)  # e.g., 'add', 'mul'
+
+        # Ensure scalar
+        if isinstance(feature, (list, tuple)):
+            feature = feature[0] if feature else 99
+
+        node_features.append(feature)
+
+        # Connect to parent
+        if parent_idx is not None:
+            edges.append((parent_idx, cur_idx))
+
+        # Push children to stack
+        if not isinstance(node, (int, float, Integer, Float)) and node.args:
+            for child in reversed(node.args):
+                stack.append((child, cur_idx))
+
+    # Debug print
+    #print(f"Expr: {expr}, Node features: {node_features}")
+
+    edge_index = torch.tensor(edges, dtype=torch.long).T if edges else torch.empty((2, 0), dtype=torch.long)
+    x = torch.tensor(node_features, dtype=torch.float)
+    return Data(x=x, edge_index=edge_index)
+
+
+def graph_encoding_1d(lhs, rhs, feature_dict, max_length):
+    """
+    Convert symbolic equations into graph representations with fixed-size encoding
+    and safely truncate overflow nodes/edges.
+    """
+    MAX_NODES, MAX_EDGES = 2*max_length + 1, 2*max_length + 1
+    MAX_EDGES = 2*MAX_NODES
+
+    # 1) Build raw graphs (LHS and RHS)
+    lhs_graph = sympy_expression_to_graph_1d(lhs, feature_dict)
+    rhs_graph = sympy_expression_to_graph_1d(rhs, feature_dict)
+
+    eq_node_feature = torch.tensor([[0, 0]], dtype=torch.float)  # "=" symbol
+
+    # 3) Insert "=" node between LHS and RHS
+    lhs_offset = lhs_graph.x.shape[0]
+    eq_node_idx = lhs_offset
+
+    # Shift RHS node indices by (lhs_offset + 1)
+    if rhs_graph.edge_index is not None and rhs_graph.edge_index.numel() > 0:
+        rhs_graph.edge_index += (lhs_offset + 1)
+    else:
+        rhs_graph.edge_index = torch.empty((2, 0), dtype=torch.long)  # Empty edges for rhs=0
+
+    # Merge node features
+    equal_sign = torch.tensor([0], dtype=torch.float)  # "=" symbol
+    x = torch.cat([lhs_graph.x, equal_sign, rhs_graph.x], dim=0)
+
+    # Merge edges
+    edge_index = torch.cat([lhs_graph.edge_index, rhs_graph.edge_index], dim=1)
+
+    # Add edges connecting LHS-last-node -> "=" -> RHS-first-node
+    lhs_last_idx = lhs_offset - 1
+    rhs_start_idx = lhs_offset + 1
+    eq_edges = torch.tensor([
+        [lhs_last_idx, eq_node_idx],
+        [eq_node_idx, rhs_start_idx]
+    ], dtype=torch.long)
+
+    edge_index = torch.cat([edge_index, eq_edges], dim=1)
+
+    # 4) Inspect raw node/edge count
+    raw_num_nodes = x.shape[0]
+    raw_num_edges = edge_index.shape[1]
+
+    # 5) Remove edges that reference nodes >= MAX_NODES
+    valid_edge_mask = (edge_index[0] < MAX_NODES) & (edge_index[1] < MAX_NODES)
+    edge_index = edge_index[:, valid_edge_mask]
+    truncated_num_edges = edge_index.shape[1]
+
+    # 6) Truncate node features if we have more than MAX_NODES
+    if raw_num_nodes > MAX_NODES:
+        x = x[:MAX_NODES]
+        truncated_num_nodes = MAX_NODES
+    else:
+        truncated_num_nodes = raw_num_nodes
+
+    # 7) Truncate edges if we have more than MAX_EDGES
+    if truncated_num_edges > MAX_EDGES:
+        edge_index = edge_index[:, :MAX_EDGES]
+        truncated_num_edges = MAX_EDGES
+
+    # 8) Pad to MAX_NODES / MAX_EDGES
+    padded_x = torch.full([MAX_NODES], 99, dtype=torch.float)
+    padded_x[:truncated_num_nodes] = x
+
+    padded_edge_index = torch.full((2, MAX_EDGES), 0, dtype=torch.long)
+    padded_edge_index[:, :truncated_num_edges] = edge_index
+
+    # 9) Create boolean masks
+    node_mask = torch.zeros(MAX_NODES, dtype=torch.bool)
+    node_mask[:truncated_num_nodes] = True
+
+    edge_mask = torch.zeros(MAX_EDGES, dtype=torch.bool)
+    edge_mask[:truncated_num_edges] = True
+
+    # 10) Return dictionary
+    vec_dict = {
+        "node_features": padded_x.numpy(),
+        "edge_index": padded_edge_index.numpy(),
+        "node_mask": node_mask.numpy(),
+        "edge_mask": edge_mask.numpy(),
+    }
+
+    complexity = 0
+    return vec_dict, complexity
+
 
 ############################################### 1D integer encoding ###############################################
 
@@ -775,30 +1056,6 @@ def make_feature_dict_integer_2d_multi(train_eqns, test_eqns):
 ################################# MULTIEQNS ###############################################
 
 
-# def load_train_test_equations(dirn, level):
-#     """
-#     Loads train and test equations for a given level from the stored text files.
-#     Returns lists of sympified equations.
-#     """
-#     level_dir = os.path.join(dirn, f"level{level}")
-
-#     train_eqns_path = os.path.join(level_dir, "train_eqns.txt")
-#     test_eqns_path = os.path.join(level_dir, "test_eqns.txt")
-
-#     if not os.path.exists(train_eqns_path) or not os.path.exists(test_eqns_path):
-#         raise FileNotFoundError(f"Train or test equation file not found for level {level} in {level_dir}")
-
-#     # Read and sympify each equation
-#     with open(train_eqns_path, "r") as f:
-#         train_eqns = [sympify(line.strip()) for line in f.readlines()]
-
-#     with open(test_eqns_path, "r") as f:
-#         test_eqns = [sympify(line.strip()) for line in f.readlines()]
-
-#     return train_eqns, test_eqns
-
-
-
 def load_train_test_equations(dirn, level, generalization="shallow"):
     """
     Loads train and test equations for a given level from the stored text files.
@@ -813,17 +1070,11 @@ def load_train_test_equations(dirn, level, generalization="shallow"):
         train_eqns (list): List of sympified train equations.
         test_eqns (list): List of sympified test equations.
     """
-    if generalization not in ["shallow", "lexical", "structural", "deep", "random"]:
-        raise ValueError(f"Invalid generalization type '{generalization}'. Choose 'shallow' or 'deep'.")
-
-    # Construct path based on generalization type
-    level_dir = os.path.join(dirn, generalization, f"level{level}")
-
-    train_eqns_path = os.path.join(level_dir, "train_eqns.txt")
-    test_eqns_path = os.path.join(level_dir, "test_eqns.txt")
+    train_eqns_path = os.path.join(dirn, generalization, "train_eqns.txt")
+    test_eqns_path = os.path.join(dirn, generalization, "test_eqns.txt")
 
     if not os.path.exists(train_eqns_path) or not os.path.exists(test_eqns_path):
-        raise FileNotFoundError(f"Train or test equation file not found for level {level} in {level_dir}")
+        raise FileNotFoundError(f"Train or test equation file not found for level {level} in {dirn}")
 
     # Read and sympify each equation
     with open(train_eqns_path, "r") as f:
@@ -833,4 +1084,3 @@ def load_train_test_equations(dirn, level, generalization="shallow"):
         test_eqns = [sympify(line.strip()) for line in f.readlines()]
 
     return train_eqns, test_eqns
-

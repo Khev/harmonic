@@ -28,16 +28,35 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 
 # --- SB3 ---
 from stable_baselines3 import PPO
-from stable_baselines3.common.callbacks import BaseCallback
+from stable_baselines3.common.callbacks import BaseCallback, ProgressBarCallback
 from stable_baselines3.common.base_class import BaseAlgorithm
 
 # --- Custom bits ---
 from rllte.xplore.reward import E3B, ICM, NGU, RE3, RIDE, RND
 
+from utils.utils_env import TreeMLPExtractor
+
 # --- Eval timeout knobs (seconds) ---
 EVAL_TIMEOUT_DET   = 0.75  # per-equation budget for greedy accuracy
 EVAL_TIMEOUT_STOCH = 1.00  # per-equation budget for success@N
 
+
+class CustomProgressBarCallback(ProgressBarCallback):
+    def __init__(self, total_timesteps, agent, equation, seed, **kwargs):
+        super().__init__(total_timesteps=total_timesteps, **kwargs)
+        self.agent = agent
+        self.equation = equation
+        self.seed = seed
+
+    def _init_callback(self):
+        self.model._logger.info(f"Training {self.agent} [{self.equation}, seed={self.seed}] for {self.total_timesteps} timesteps...")
+        self.pbar = tqdm(total=self.total_timesteps, desc=f"{self.agent} [{self.equation}, seed={self.seed}]")
+
+    def _on_step(self):
+        if self.pbar is not None:
+            self.pbar.n = self.num_timesteps
+            self.pbar.refresh()
+        return True
 
 def timed_print(msg):
     time_str = datetime.datetime.now().strftime("%H:%M:%S")
@@ -201,10 +220,14 @@ class IntrinsicReward(BaseCallback):
 # Env / agent factories
 # ---------------------------
 def make_env(env_name: str, gen, seed: int = 0):
+    state_rep = 'graph_integer_1d'
+    state_rep = 'integer_1d'
+    sparse_rewards = True
+    use_relabel_constants = False
     if env_name == 'single_eqn':
-        env = singleEqn(main_eqn='a*x+b')
+        env = singleEqn(main_eqn='a*x+b', state_rep=state_rep)
     elif env_name == 'multi_eqn':
-        env = multiEqn(gen=gen)
+        env = multiEqn(gen=gen, use_relabel_constants=use_relabel_constants, state_rep = state_rep, sparse_rewards=sparse_rewards)
     else:
         raise ValueError(f"Unknown env_name: {env_name}")
     try:
@@ -236,8 +259,41 @@ def make_agent(agent: str, env, hidden_dim: int, seed: int = 0, load_path: str =
             env=env,
             policy_kwargs=policy_kwargs,
             seed=seed,
-            verbose=0
+            verbose=0,
+            n_steps=2048
         )
+
+    elif agent == 'ppo-tree':
+
+        pol, rep = "MultiInputPolicy", 'graph_integer_1d'
+        hidden_dim = 64
+        embed_dim = 32
+        K = 2
+        kwargs = dict(
+            features_extractor_class=TreeMLPExtractor,
+            features_extractor_kwargs=dict(
+                max_nodes=env.observation_dim//2,
+                max_edges=2*env.observation_dim//2,
+                vocab_min_id=-10,   # your dict had op ids down to -4 (e.g., 'sqrt'), safe default
+                pad_id=99,
+                embed_dim=embed_dim,
+                hidden_dim=hidden_dim,
+                K=K,
+                pooling="mean",
+            ),
+            net_arch=dict(pi=[128], vf=[128]),
+        )
+
+        model = PPO(
+            policy=pol,
+            env=env,
+            policy_kwargs=kwargs,
+            verbose=0,
+            seed=seed,
+            n_steps=2048
+        )
+
+
     else:
         raise ValueError(f"Unknown agent: {agent}")
 
@@ -396,7 +452,8 @@ class TrainingLogger(BaseCallback):
         os.makedirs(self.save_dir, exist_ok=True)
 
     def _log_eval(self, step):
-        cov = len(self.Tsolves) / self.num_eqns if self.num_eqns else 0.0
+        solved = min(len(self.Tsolves), self.num_eqns)
+        cov = solved / self.num_eqns if self.num_eqns else 0.0
         tst = greedy_accuracy(self.model, self.eval_env, self.test_eqns,  max_steps=5, per_eqn_seconds=EVAL_TIMEOUT_DET) if self.test_eqns  else None
         t10 = success_at_n(self.model, self.eval_env, self.test_eqns, n_trials=10, max_steps=5, per_eqn_seconds=EVAL_TIMEOUT_STOCH) if self.test_eqns else None
 
@@ -470,7 +527,10 @@ def run_trial(agent: str, env_name: str, gen, Ntrain: int, eval_interval: int, l
     eval_env  = make_env(env_name, gen, seed=seed + 777)
 
     # Build or load model
-    agent_temp = 'ppo'
+    if agent != 'ppo-tree':
+        agent_temp = 'ppo'
+    else:
+        agent_temp = agent
     model = make_agent(agent_temp, train_env, hidden_dim, seed=seed, load_path=load_model_path)
 
     # Per-trial save dir
@@ -488,13 +548,16 @@ def run_trial(agent: str, env_name: str, gen, Ntrain: int, eval_interval: int, l
         save_dir=run_dir
     )
 
+    cb_progress = ProgressBarCallback()
+    cb = [cb, cb_progress]
+
     # Intrinsic reward
     if curiosity is not None:
         train_env_wrapped = DummyVecEnv([lambda: train_env])
         irs = get_intrinsic_reward(curiosity, train_env_wrapped)
         if irs:
             cb_curiosity = IntrinsicReward(irs, log_interval=log_interval)
-            cb = [cb, cb_curiosity]
+            cb.append(cb_curiosity)
 
     # Learn
     model.learn(total_timesteps=Ntrain, callback=cb)
@@ -601,7 +664,7 @@ if __name__ == "__main__":
     parser.add_argument('--n_trials', type=int, default=1, help='Number of trials per agent')
     parser.add_argument('--base_seed', type=int, default=10, help='Base seed')
     parser.add_argument('--n_workers', type=int, default=1, help='Number of parallel workers')
-    parser.add_argument('--gen', type=str, default='abel_level4', help='Generator for multi_eqn')
+    parser.add_argument('--gen', type=str, default='abel_level3', help='Generator for multi_eqn')
     parser.add_argument('--hidden_dim', type=int, default=64, help='Hidden dimension for policy network')
     parser.add_argument('--save_root', type=str, default=None, help='Save root directory')
     parser.add_argument('--load_model_path', type=str, default=None, help='Path to load model from')
@@ -609,6 +672,7 @@ if __name__ == "__main__":
 
     env_name = args.env_name
     agents = args.agents
+    agents = ['ppo', 'ppo-RND']
     Ntrain = args.Ntrain
     eval_interval = Ntrain // 20
     log_interval = Ntrain // 20
@@ -617,7 +681,7 @@ if __name__ == "__main__":
     n_workers = args.n_workers
     gen = args.gen
     hidden_dim = args.hidden_dim
-    save_root = args.save_root or f"data/{gen}_hidden_dim{hidden_dim}"
+    save_root = args.save_root or f"data/sparse_rewards/{gen}_hidden_dim{hidden_dim}"
     load_model_path = args.load_model_path
     curiosity = None
 
@@ -639,7 +703,7 @@ if __name__ == "__main__":
             bump, curiosity_local = 0, None
         else:
             curiosity_type = agent.split('-')[1]
-            bump = {'ICM': 1000, 'E3B': 2000, 'RIDE': 3000, 'RND': 4000, 'RE3': 5000, 'NGU': 6000}[curiosity_type]
+            bump = {'ICM': 1000, 'E3B': 2000, 'RIDE': 3000, 'RND': 4000, 'RE3': 5000, 'NGU': 6000, 'tree':7000}[curiosity_type]
             curiosity_local = curiosity_type
         
         for t in range(n_trials):
