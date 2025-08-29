@@ -6,14 +6,12 @@ import signal
 import numpy as np
 import pandas as pd
 import multiprocessing as mp
-import tqdm
 from multiprocessing import TimeoutError
 from contextlib import contextmanager
 
 import gymnasium as gym
 import torch
 import datetime
-from collections import deque
 from concurrent.futures import ProcessPoolExecutor, as_completed
 TRIAL_WALLCLOCK_LIMIT = 7 * 24 * 60 * 60  # 7 days hard cap per trial (tweak)
 
@@ -33,6 +31,7 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.callbacks import BaseCallback, ProgressBarCallback
 from stable_baselines3.common.base_class import BaseAlgorithm
 
+
 # --- Custom bits ---
 #from rllte.xplore.reward import E3B, ICM, NGU, RE3, RIDE, RND
 
@@ -41,175 +40,6 @@ from utils.utils_env import TreeMLPExtractor
 # --- Eval timeout knobs (seconds) ---
 EVAL_TIMEOUT_DET   = 0.75  # per-equation budget for greedy accuracy
 EVAL_TIMEOUT_STOCH = 1.00  # per-equation budget for success@N
-
-from stable_baselines3.common.callbacks import BaseCallback
-import numpy as np
-from collections import deque
-
-class SuccessBuffer:
-    def __init__(self, capacity=5000):
-        self.obs = deque(maxlen=capacity)
-        self.act = deque(maxlen=capacity)
-
-    def add_episode(self, traj_obs, traj_act):
-        # traj_obs: [T, ...], traj_act: [T]
-        for o, a in zip(traj_obs, traj_act):
-            self.obs.append(o)
-            self.act.append(a)
-
-    def sample(self, batch_size):
-        import random
-        n = len(self.obs)
-        if n == 0:
-            return np.empty((0,)), np.empty((0,), dtype=np.int64)
-        if n >= batch_size:
-            idx = random.sample(range(n), k=batch_size)
-        else:
-            idx = np.random.randint(0, n, size=batch_size).tolist()
-        obs_b = np.stack([self.obs[i] for i in idx], axis=0).astype(np.float32)
-        act_b = np.array([self.act[i] for i in idx], dtype=np.int64)
-        return obs_b, act_b
-
-    def __len__(self):
-        return len(self.obs)
-
-
-class SuccessReplayCallback(BaseCallback):
-    """
-    Collect per-episode (obs_t, action_t) trajectories inside the callback.
-    When an episode is marked solved via info['is_solved'], push that
-    episode into a supervised buffer for BC-style minibatches after rollouts.
-    """
-    def __init__(self, mix_ratio=0.15, batch_size=256, iters_per_rollout=1, capacity=10000, verbose=0):
-        super().__init__(verbose)
-        self.mix_ratio = float(mix_ratio)
-        self.batch_size = int(batch_size)
-        self.iters_per_rollout = int(iters_per_rollout)
-        self.buf = SuccessBuffer(capacity=capacity)
-        self.unique_eqns = set()
-
-        # per-env rolling trajectories
-        self._traj_obs = None  # list[list[np.ndarray]]
-        self._traj_act = None  # list[list[int]]
-
-    # ---------- helpers ----------
-    @staticmethod
-    def _pick_from_dict(d):
-        # Prefer graph node features; else 'observation'; else first key
-        if "node_features" in d:
-            return d["node_features"]
-        if "observation" in d:
-            return d["observation"]
-        return d[next(iter(d))]
-
-    def _obs_to_array(self, obs_i):
-        # obs_i can be dict/np.array
-        if isinstance(obs_i, dict):
-            arr = self._pick_from_dict(obs_i)
-        else:
-            arr = obs_i
-        return np.asarray(arr)
-
-    def _ensure_buffers(self):
-        if self._traj_obs is None or self._traj_act is None:
-            n_envs = getattr(self.training_env, "num_envs", 1)
-            self._traj_obs = [[] for _ in range(n_envs)]
-            self._traj_act = [[] for _ in range(n_envs)]
-
-    # ---------- SB3 hooks ----------
-    def _on_training_start(self) -> None:
-        self._ensure_buffers()
-
-    def _on_rollout_start(self) -> None:
-        # In case vecenv count changed for some reason
-        self._ensure_buffers()
-
-    def _on_step(self) -> bool:
-        self._ensure_buffers()
-
-        # shapes:
-        #   last_obs: (n_envs, ...) state **before** action_t
-        #   actions: (n_envs,) or (n_envs, A)
-        #   dones:   (n_envs,)
-        #   infos:   list[dict] length n_envs
-        last_obs = self.model._last_obs
-        actions = self.locals["actions"]
-        dones   = self.locals["dones"]
-        infos   = self.locals.get("infos", [{}] * len(dones))
-
-        # Normalize actions -> scalar ints when discrete
-        if isinstance(actions, np.ndarray) and actions.ndim > 1 and actions.shape[-1] == 1:
-            actions = actions.squeeze(-1)
-
-        n_envs = len(dones)
-        for i in range(n_envs):
-            # Append current (obs_t, action_t)
-            o_i = self._obs_to_array(last_obs[i])
-            a_i = int(actions[i]) if np.isscalar(actions[i]) or actions[i].shape == () else int(actions[i][0])
-            self._traj_obs[i].append(o_i)
-            self._traj_act[i].append(a_i)
-
-            # If solved, commit this episode to buffer
-            if infos[i].get("is_solved", False):
-                traj_obs = np.stack(self._traj_obs[i], axis=0).astype(np.float32)
-                traj_act = np.asarray(self._traj_act[i], dtype=np.int64)
-                self.buf.add_episode(traj_obs, traj_act)
-
-                main_eqn = infos[i].get("main_eqn")
-                if main_eqn is not None and main_eqn not in self.unique_eqns:
-                    self.unique_eqns.add(main_eqn)
-                if self.verbose:
-                    print(f"[SuccessReplay] +episode | env={i} | len={len(traj_act)} | buf={len(self.buf)}")
-
-            # On episode end (done or truncated), clear per-env trajectory
-            if dones[i] or infos[i].get("TimeLimit.truncated", False) or infos[i].get("truncated", False):
-                self._traj_obs[i].clear()
-                self._traj_act[i].clear()
-
-        return True
-
-    @torch.no_grad()
-    def _policy_logits(self, obs_tensor):
-        dist = self.model.policy.get_distribution(obs_tensor)
-        return dist.distribution.logits
-
-    def _supervised_update(self, obs_batch, act_batch):
-        device = self.model.policy.device
-        obs_t = torch.as_tensor(obs_batch, device=device)
-        act_t = torch.as_tensor(act_batch, device=device)
-
-        self.model.policy.optimizer.zero_grad(set_to_none=True)
-        dist = self.model.policy.get_distribution(obs_t)
-        logp = dist.log_prob(act_t)           # [B]
-        loss_bc = -logp.mean()
-        ent = dist.entropy().mean()
-        loss = loss_bc - 1e-3 * ent
-
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(self.model.policy.parameters(), 0.5)
-        self.model.policy.optimizer.step()
-        return float(loss_bc.item()), float(ent.item())
-
-    def _on_rollout_end(self) -> None:
-        if len(self.buf) == 0:
-            return
-
-        n_envs = getattr(self.training_env, "num_envs", 1)
-        n_steps = getattr(self.model, "n_steps", 2048)
-        target_supervised_minibatches = max(1, int(self.mix_ratio * (n_envs * n_steps) / self.batch_size))
-        total_iters = max(self.iters_per_rollout, target_supervised_minibatches)
-
-        bc_losses, ents = [], []
-        for _ in range(total_iters):
-            obs_b, act_b = self.buf.sample(self.batch_size)
-            if obs_b.shape[0] == 0:
-                break
-            lbc, ent = self._supervised_update(obs_b, act_b)
-            bc_losses.append(lbc); ents.append(ent)
-
-        if self.verbose and bc_losses:
-            print(f"[SuccessReplay] size={len(self.buf)} bc_steps={len(bc_losses)} "
-                  f"bc_loss={np.mean(bc_losses):.4f} ent={np.mean(ents):.3f}")
 
 
 class CustomProgressBarCallback(ProgressBarCallback):
@@ -256,20 +86,31 @@ def get_device():
 
 def get_intrinsic_reward(intrinsic_reward, vec_env):
     """Returns an intrinsic reward module from rllte.xplore."""
+    if intrinsic_reward is None:
+        return None
+    # Lazy import so the script runs even if rllte is not installed and curiosity=None
+    try:
+        from rllte.xplore.reward import E3B, ICM, NGU, RE3, RIDE, RND
+    except Exception as e:
+        print(f"[WARN] Curiosity '{intrinsic_reward}' requested but rllte.xplore not importable: {e}")
+        return None
+
     device = get_device()
-    if intrinsic_reward == 'ICM':
+    kind = str(intrinsic_reward).upper()
+    if kind == 'ICM':
         return ICM(vec_env, device=device)
-    elif intrinsic_reward == 'E3B':
+    elif kind == 'E3B':
         return E3B(vec_env, device=device)
-    elif intrinsic_reward == 'RIDE':
+    elif kind == 'RIDE':
         return RIDE(vec_env, device=device)
-    elif intrinsic_reward == 'RND':
+    elif kind == 'RND':
         return RND(vec_env, device=device)
-    elif intrinsic_reward == 'RE3':
+    elif kind == 'RE3':
         return RE3(vec_env, device=device)
-    elif intrinsic_reward == 'NGU':
+    elif kind == 'NGU':
         return NGU(vec_env, device=device)
     else:
+        print(f"[WARN] Unknown curiosity type: {intrinsic_reward}")
         return None
 
 
@@ -294,97 +135,6 @@ def time_limit(seconds: float):
     finally:
         signal.setitimer(signal.ITIMER_REAL, 0)
         signal.signal(signal.SIGALRM, prev)
-
-
-class IntrinsicRewardOld(BaseCallback):
-    """
-    A more efficient callback for logging intrinsic rewards in RL training.
-    """
-
-    def __init__(self, irs, verbose=0, log_interval=100):
-        super(IntrinsicReward, self).__init__(verbose)
-        self.irs = irs
-        self.buffer = None
-        self.rewards_internal = []  # Store intrinsic rewards for logging
-        self.log_interval = log_interval
-        self.last_computed_intrinsic_rewards = None  # Store for logging
-
-    def init_callback(self, model: BaseAlgorithm) -> None:
-        super().init_callback(model)
-        self.buffer = self.model.rollout_buffer
-
-    def _on_step(self) -> bool:
-        """
-        Call .watch() to monitor transitions (required for NGU's episodic memory).
-        Then, log previously computed intrinsic rewards if available.
-        """
-        # Call watch only for NGU; no-op for others
-        if isinstance(self.irs, NGU):
-            try:
-                # Convert to tensors on the correct device
-                device = self.irs.device
-                observations = torch.as_tensor(self.model._last_obs, device=device).float()
-                actions = torch.as_tensor(self.locals["actions"], device=device).float()
-                rewards = torch.as_tensor(self.locals["rewards"], device=device).float()
-                dones = torch.as_tensor(self.locals["dones"], device=device).float()
-                next_observations = torch.as_tensor(self.locals["new_obs"], device=device).float()
-                self.irs.watch(
-                    observations=observations,
-                    actions=actions,
-                    rewards=rewards,
-                    next_observations=next_observations,
-                    terminateds=dones,
-                    truncateds=dones
-                )
-            except Exception as e:
-                # Defensive: log error but continue
-                print(f"Warning: NGU.watch() failed: {e}")
-
-        if self.last_computed_intrinsic_rewards is not None:
-            # Get last intrinsic reward from the rollout buffer
-            intrinsic_reward = self.last_computed_intrinsic_rewards[-1]
-            self.rewards_internal.append(intrinsic_reward)
-
-        return True
-
-    def _on_rollout_end(self) -> None:
-        """
-        Efficiently compute intrinsic rewards once per rollout and store them.
-        """
-        device = self.irs.device
-        obs = torch.as_tensor(self.buffer.observations, device=device).float()
-        new_obs = obs.clone()
-        new_obs[:-1] = obs[1:]
-        new_obs[-1] = torch.as_tensor(self.locals["new_obs"], device=device).float()
-        actions = torch.as_tensor(self.buffer.actions, device=device)
-        rewards = torch.as_tensor(self.buffer.rewards, device=device)
-        dones = torch.as_tensor(self.buffer.episode_starts, device=device)
-
-        # ✅ Compute **intrinsic rewards for the entire rollout** at once
-        samples = dict(observations=obs, actions=actions,
-                      rewards=rewards, terminateds=dones,
-                      truncateds=dones, next_observations=new_obs)
-        intrinsic_rewards = self.irs.compute(
-            samples=samples,
-            sync=True
-        ).cpu().numpy()
-
-        # ✅ Update the reward module
-        self.irs.update(samples=samples)
-
-        # Ensure shape is (n_steps, 1) for addition to buffer
-        if intrinsic_rewards.ndim == 1:
-            intrinsic_rewards = intrinsic_rewards[:, np.newaxis]
-        elif intrinsic_rewards.ndim > 2:
-            # Defensive: flatten extra dims if unexpected (e.g., for NGU errors)
-            intrinsic_rewards = intrinsic_rewards.reshape(intrinsic_rewards.shape[0], -1).mean(axis=1, keepdims=True)
-
-        # ✅ Store them so `_on_step()` can access them
-        self.last_computed_intrinsic_rewards = intrinsic_rewards
-
-        # ✅ Add intrinsic rewards to the rollout buffer
-        self.buffer.advantages += intrinsic_rewards
-        self.buffer.returns += intrinsic_rewards
 
 
 class IntrinsicCuriosity(BaseCallback):
@@ -599,9 +349,9 @@ class IntrinsicCuriosity(BaseCallback):
 # Env / agent factories
 # ---------------------------
 def make_env(env_name: str, gen, seed: int = 0):
-    #state_rep = 'graph_integer_1d'
-    state_rep = 'integer_1d'
-    sparse_rewards = False
+    state_rep = 'graph_integer_1d'
+    #state_rep = 'integer_1d'
+    sparse_rewards = True
     use_relabel_constants = False
     if env_name == 'single_eqn':
         env = singleEqn(main_eqn='a*x+b', state_rep=state_rep)
@@ -918,7 +668,7 @@ def run_trial(agent: str, env_name: str, gen, Ntrain: int, eval_interval: int, l
     os.makedirs(run_dir, exist_ok=True)
 
     # Callback with eval
-    cb_logger = TrainingLogger(
+    cb = TrainingLogger(
         algo_name=agent,
         train_env=train_env,
         eval_env=eval_env,
@@ -928,26 +678,15 @@ def run_trial(agent: str, env_name: str, gen, Ntrain: int, eval_interval: int, l
     )
 
     cb_progress = ProgressBarCallback()
-    cb = [cb_logger, cb_progress]
+    cb = [cb, cb_progress]
 
-    use_buffer = True
-    if use_buffer:
-        #mix_ratio, iters_per_rollout = 0.5, 100 # this is aggressive, to force the solve of a single eqn
-        mix_ratio, iters_per_rollout = 0.5, 10   # for multieqn solving 
-        mix_ratio, iters_per_rollout, capacity = 0.2, 3, 3*10**4 
-        cb_replay = SuccessReplayCallback(
-            mix_ratio=mix_ratio, batch_size=256, iters_per_rollout=iters_per_rollout,
-            capacity=capacity, verbose=0
-        )
-        cb.append(cb_replay)
-    
     # Intrinsic reward
     if curiosity is not None:
         train_env_wrapped = DummyVecEnv([lambda: train_env])
         irs = get_intrinsic_reward(curiosity, train_env_wrapped)
         if irs:
-            cb_curiosity = IntrinsicCuriosity(irs=irs, agent_name=agent, log_interval=log_interval, verbose=0)
-            cb.append(cb_curiosity)
+            cb_cur = IntrinsicCuriosity(irs=irs, agent_name=agent, log_interval=log_interval, verbose=0)
+            cb.append(cb_cur)
 
     # Learn
     model.learn(total_timesteps=Ntrain, callback=cb)
@@ -1016,9 +755,7 @@ def run_parallel(jobs, n_workers=4, timeout_per_job=None):
     done = 0
 
     with ProcessPoolExecutor(max_workers=n_workers, mp_context=ctx) as ex:
-        futures = [ex.submit
-
-(run_trial_wrapper, job) for job in jobs]
+        futures = [ex.submit(run_trial_wrapper, job) for job in jobs]
         for fut in as_completed(futures):
             try:
                 # If you also want an external per-job timeout, set timeout=... here.
@@ -1047,14 +784,15 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="RL Sweep Script")
     parser.add_argument('--env_name', type=str, default='multi_eqn', help='Environment name')
-    parser.add_argument('--agents', nargs='+', default=['ppo', 'ppo-RND', 'ppo-RIDE', 'ppo-ICM'], help='List of agents')
-    parser.add_argument('--Ntrain', type=int, default=10**7, help='Total training timesteps')
+    parser.add_argument('--agents', nargs='+', default=['ppo-tree'], help='List of agents')
+    parser.add_argument('--curiosities', type=str, default='RND', help='Comma-separated curiosities, e.g. "None,ICM,RND"')
+    parser.add_argument('--Ntrain', type=int, default=10**4, help='Total training timesteps')
     parser.add_argument('--eval_interval', type=int, default=10**6, help='Evaluation interval')
     parser.add_argument('--log_interval', type=int, default=10**6, help='Log interval')
-    parser.add_argument('--n_trials', type=int, default=2, help='Number of trials per agent')
+    parser.add_argument('--n_trials', type=int, default=1, help='Number of trials per agent')
     parser.add_argument('--base_seed', type=int, default=10, help='Base seed')
     parser.add_argument('--n_workers', type=int, default=1, help='Number of parallel workers')
-    parser.add_argument('--gen', type=str, default='abel_level3', help='Generator for multi_eqn')
+    parser.add_argument('--gen', type=str, default='abel_level1', help='Generator for multi_eqn')
     parser.add_argument('--hidden_dim', type=int, default=64, help='Hidden dimension for policy network')
     parser.add_argument('--save_root', type=str, default=None, help='Save root directory')
     parser.add_argument('--load_model_path', type=str, default=None, help='Path to load model from')
@@ -1062,21 +800,23 @@ if __name__ == "__main__":
 
     env_name = args.env_name
     agents = args.agents
-    agents = ['ppo']
     Ntrain = args.Ntrain
-    eval_interval = Ntrain // 20
-    log_interval = Ntrain // 20
+    eval_interval = Ntrain // 2
+    log_interval = Ntrain // 2
     n_trials = args.n_trials
     base_seed = args.base_seed
     n_workers = args.n_workers
     gen = args.gen
     hidden_dim = args.hidden_dim
-    save_root = args.save_root or f"data/buffer/{gen}_hidden_dim{hidden_dim}"
+    save_root = args.save_root or f"data/sparse_rewards/{gen}_hidden_dim{hidden_dim}"
     load_model_path = args.load_model_path
-    curiosity = None
+
+    # Parse curiosities: allow "None" / "none" → None
+    curiosities_raw = [s.strip() for s in (args.curiosities.split(',') if args.curiosities else ['None'])]
+    curiosities = [None if c.lower() == 'none' or c == '' else c for c in curiosities_raw]
 
     timed_print("\n" + "-" * 50)
-    timed_print(f"Parallel sweep on {env_name} | agents={agents} | Ntrain={Ntrain} | {curiosity}  ")
+    timed_print(f"Parallel sweep on {env_name} | agents={agents} | curiosities={curiosities} | Ntrain={Ntrain}")
     timed_print(f"Eval timeouts: greedy={EVAL_TIMEOUT_DET}s, success@N={EVAL_TIMEOUT_STOCH}s")
     if load_model_path:
         timed_print(f"Loading initial weights from: {load_model_path}")
@@ -1087,18 +827,20 @@ if __name__ == "__main__":
     for agent in agents:
         # Set agent-specific save directory
         save_root_agent = os.path.join(save_root, agent)
-        
-        # Determine model_agent (base policy), bump, and curiosity based on agent
-        if agent == 'ppo':
-            bump, curiosity_local = 0, None
-        else:
-            curiosity_type = agent.split('-')[1]
-            bump = {'ICM': 1000, 'E3B': 2000, 'RIDE': 3000, 'RND': 4000, 'RE3': 5000, 'NGU': 6000, 'tree':7000}[curiosity_type]
-            curiosity_local = curiosity_type
-        
-        for t in range(n_trials):
-            seed = base_seed + 1000 * t + bump
-            jobs.append((agent, env_name, gen, Ntrain, eval_interval, log_interval, seed, save_root_agent, curiosity_local, hidden_dim, load_model_path))
+
+        for curiosity in curiosities:
+            # Seed bump by curiosity for determinism across types
+            if curiosity is None:
+                bump = 0
+            else:
+                # Simple stable bump mapping
+                cmap = {'ICM': 1000, 'E3B': 2000, 'RIDE': 3000, 'RND': 4000, 'RE3': 5000, 'NGU': 6000}
+                bump = cmap.get(str(curiosity).upper(), 7000)
+
+            for t in range(n_trials):
+                seed = base_seed + 1000 * t + bump
+                jobs.append((agent, env_name, gen, Ntrain, eval_interval, log_interval, seed,
+                             save_root_agent, curiosity, hidden_dim, load_model_path))
 
     # Run in parallel without batching
     rows, run_dirs = run_parallel(
@@ -1129,3 +871,4 @@ if __name__ == "__main__":
     out_csv = os.path.join(save_root, "summary.csv")
     summary.to_csv(out_csv, index=False)
     timed_print(f"\nSaved summary → {out_csv}")
+
