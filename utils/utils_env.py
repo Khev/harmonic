@@ -15,6 +15,118 @@ from collections import deque
 from torch_geometric.data import Data
 from stable_baselines3.common.torch_layers import BaseFeaturesExtractor
 from gymnasium import spaces
+from stable_baselines3.common.callbacks import BaseCallback, ProgressBarCallback
+
+
+class SuccessBuffer:
+    def __init__(self, capacity=5000):
+        self.obs = deque(maxlen=capacity)
+        self.act = deque(maxlen=capacity)
+
+    def add_episode(self, traj_obs, traj_act):
+        for o, a in zip(traj_obs, traj_act):
+            self.obs.append(o)
+            self.act.append(a)
+
+    def sample(self, batch_size):
+        import random
+        n = len(self.obs)
+        if n == 0:
+            return np.empty((0,)), np.empty((0,), dtype=np.int64)
+        if n >= batch_size:
+            idx = random.sample(range(n), k=batch_size)  # without replacement
+        else:
+            # with replacement to fill a full batch
+            idx = np.random.randint(0, n, size=batch_size).tolist()
+        obs_b = np.stack([self.obs[i] for i in idx], axis=0).astype(np.float32)
+        act_b = np.array([self.act[i] for i in idx], dtype=np.int64)
+        return obs_b, act_b
+
+    def __len__(self):
+        return len(self.obs)
+
+
+class SuccessReplayCallback(BaseCallback):
+    """
+    Mix 10–20% supervised policy updates from a success buffer after each rollout.
+    """
+    def __init__(self, mix_ratio=0.15, batch_size=256, iters_per_rollout=1, capacity=10000, verbose=0):
+        super().__init__(verbose)
+        self.mix_ratio = float(mix_ratio)            # target “fraction” of extra updates
+        self.batch_size = int(batch_size)
+        self.iters_per_rollout = int(iters_per_rollout)
+        self.buf = SuccessBuffer(capacity=capacity)
+        self.unique_eqns = set([])
+
+    def _on_step(self) -> bool:
+        # harvest successful trajectories from infos
+        for info in self.locals.get("infos", []):
+            if not isinstance(info, dict):
+                continue
+            if info.get("success"):
+                main_eqn = info.get('main_eqn')
+                if main_eqn not in self.unique_eqns:
+                    self.unique_eqns.add(main_eqn)
+                    print(f't={self.num_timesteps} | Solved {info.get('main_eqn')} | Coverage = {info.get('coverage'):.3f}')
+                #self.unique_eqns.add(main_eqn)
+                traj_obs = info.get("traj_obs", None)
+                traj_act = info.get("traj_act", None)
+                if traj_obs is not None and traj_act is not None and len(traj_obs) == len(traj_act):
+                    self.buf.add_episode(traj_obs, traj_act)
+        return True
+
+    @torch.no_grad()
+    def _policy_logits(self, obs_tensor):
+        # SB3 policy API: get distribution from observations
+        dist = self.model.policy.get_distribution(obs_tensor)
+        # For Discrete: dist.distribution.logits (Categorical)
+        return dist.distribution.logits
+
+    def _supervised_update(self, obs_batch, act_batch):
+        device = self.model.policy.device
+        obs_t = torch.as_tensor(obs_batch, device=device)
+        act_t = torch.as_tensor(act_batch, device=device)
+
+        # Reuse the policy optimizer
+        self.model.policy.optimizer.zero_grad(set_to_none=True)
+
+        # Build distribution and compute NLL
+        dist = self.model.policy.get_distribution(obs_t)
+        logp = dist.log_prob(act_t)                 # shape [B]
+        loss_bc = -logp.mean()
+
+        # (Optional) entropy bonus to keep exploration
+        ent = dist.entropy().mean()
+        loss = loss_bc - 0.001 * ent
+
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.model.policy.parameters(), 0.5)
+        self.model.policy.optimizer.step()
+
+        return float(loss_bc.item()), float(ent.item())
+
+    def _on_rollout_end(self) -> None:
+        if len(self.buf) == 0:
+            return
+        # Heuristic: scale number of supervised minibatches by mix_ratio
+        # relative to PPO's own update size (n_steps).
+        n_envs = getattr(self.training_env, "num_envs", 1)
+        n_steps = getattr(self.model, "n_steps", 2048)
+        target_supervised_minibatches = max(
+            1, int(self.mix_ratio * (n_envs * n_steps) / self.batch_size)
+        )
+
+        total_iters = max(self.iters_per_rollout, target_supervised_minibatches)
+        bc_losses, ents = [], []
+        for _ in range(total_iters):
+            obs_b, act_b = self.buf.sample(self.batch_size)
+            lbc, ent = self._supervised_update(obs_b, act_b)
+            bc_losses.append(lbc); ents.append(ent)
+
+        if self.verbose:
+            print(f"[SuccessReplay] size={len(self.buf)} bc_steps={total_iters} "
+                  f"bc_loss={np.mean(bc_losses):.4f} ent={np.mean(ents):.3f}")
+
 
 class TreeMLPExtractor(BaseFeaturesExtractor):
     def __init__(
